@@ -32,9 +32,9 @@ export function Contact() {
                 style={{
                   padding: '1.5rem',
                   borderRadius: 'var(--lb-radius-lg)',
-                  border: '2px solid var(--lb-ink)',
+                  border: 'none',
                   background: 'var(--lb-white)',
-                  boxShadow: 'var(--lb-shadow-sm)',
+                  boxShadow: 'var(--lb-shadow)',
                 }}
               >
                 <h2 style={{ margin: '0 0 0.35rem', fontSize: '1.35rem', fontWeight: 800 }}>{loc.name}</h2>
@@ -46,14 +46,14 @@ export function Contact() {
                     href={loc.mapUrl}
                     target="_blank"
                     rel="noreferrer"
-                    style={{ fontSize: '0.95rem', minHeight: '2.5rem' }}
+                    style={{ fontSize: '1rem' }}
                   >
                     Open in Maps
                   </a>
                   <a
                     className="lb-btn"
                     href={`tel:${loc.phone.replace(/\s/g, '')}`}
-                    style={{ fontSize: '0.95rem', minHeight: '2.5rem', background: 'var(--lb-tomato)', color: 'var(--lb-white)' }}
+                    style={{ fontSize: '1rem', background: 'var(--lb-tomato)', color: 'var(--lb-white)' }}
                   >
                     Call {loc.phone}
                   </a>
@@ -69,9 +69,9 @@ export function Contact() {
               marginTop: '1.75rem',
               padding: '1.5rem',
               borderRadius: 'var(--lb-radius-lg)',
-              border: '2px solid var(--lb-ink)',
+              border: 'none',
               background: 'var(--lb-cheese)',
-              boxShadow: 'var(--lb-shadow-sm)',
+              boxShadow: 'var(--lb-shadow)',
             }}
           >
             <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.25rem', fontWeight: 800 }}>Email the hive mind</h2>

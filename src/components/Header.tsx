@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 const nav = [
@@ -12,6 +12,8 @@ const nav = [
 export function Header() {
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
+  const { pathname } = useLocation()
+  const isMenuPage = pathname === '/menu'
 
   return (
     <header
@@ -21,41 +23,12 @@ export function Header() {
         top: 0,
         zIndex: 50,
         paddingTop: 'var(--lb-safe-top)',
-        background: 'rgba(255, 251, 247, 0.92)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '3px solid var(--lb-ink)',
+        background: isMenuPage ? 'var(--lb-location-hero-matte)' : 'var(--lb-orange)',
+        borderBottom: 'none',
+        boxShadow: 'none',
       }}
     >
       <div className="lb-container header__inner">
-        <Link
-          to="/"
-          className="header__brand"
-          onClick={() => setOpen(false)}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.65rem',
-            fontWeight: 800,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          <motion.img
-            src="/brand/logo-mark.png"
-            alt=""
-            width={48}
-            height={48}
-            style={{ borderRadius: '14px', border: '2px solid var(--lb-ink)' }}
-            whileHover={
-              reduce
-                ? undefined
-                : { rotate: [-4, 4, -3, 0], transition: { duration: 0.45 } }
-            }
-          />
-          <span className="header__wordmark" style={{ fontSize: '1.15rem' }}>
-            LOVE BITES
-          </span>
-        </Link>
-
         <nav className="header__nav-desktop" aria-label="Main">
           {nav.map((item) => (
             <NavLink
@@ -81,11 +54,11 @@ export function Header() {
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
           <span aria-hidden className="header__burger">
             <motion.span
-              animate={open ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+              animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
               style={{
                 display: 'block',
-                width: 26,
-                height: 3,
+                width: 22,
+                height: 2,
                 background: 'var(--lb-ink)',
                 borderRadius: 2,
               }}
@@ -94,20 +67,20 @@ export function Header() {
               animate={open ? { opacity: 0 } : { opacity: 1 }}
               style={{
                 display: 'block',
-                width: 26,
-                height: 3,
-                marginTop: 6,
+                width: 22,
+                height: 2,
+                marginTop: 4,
                 background: 'var(--lb-ink)',
                 borderRadius: 2,
               }}
             />
             <motion.span
-              animate={open ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+              animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
               style={{
                 display: 'block',
-                width: 26,
-                height: 3,
-                marginTop: 6,
+                width: 22,
+                height: 2,
+                marginTop: 4,
                 background: 'var(--lb-ink)',
                 borderRadius: 2,
               }}
@@ -124,7 +97,7 @@ export function Header() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={reduce ? undefined : { height: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 400, damping: 38 }}
-            style={{ overflow: 'hidden', borderBottom: '3px solid var(--lb-ink)' }}
+            style={{ overflow: 'hidden', borderBottom: 'none' }}
           >
             <nav
               className="lb-container"
@@ -149,13 +122,14 @@ export function Header() {
                     onClick={() => setOpen(false)}
                     style={{
                       display: 'block',
-                      padding: '0.85rem 1rem',
-                      borderRadius: 'var(--lb-radius)',
-                      border: '2px solid var(--lb-ink)',
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '0.35rem',
+                      border: '2px solid transparent',
                       fontWeight: 700,
                       fontSize: '1.1rem',
-                      background: 'var(--lb-white)',
-                      boxShadow: 'var(--lb-shadow-sm)',
+                      lineHeight: 1.25,
+                      background: 'transparent',
+                      boxShadow: 'none',
                     }}
                     className={({ isActive }) => (isActive ? 'header__mobile-active' : '')}
                   >
@@ -173,8 +147,9 @@ export function Header() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 1rem;
-          min-height: 4rem;
+          gap: 0.5rem;
+          min-height: 0;
+          padding-block: 0.3rem;
         }
         .header__nav-desktop {
           display: none;
@@ -186,28 +161,46 @@ export function Header() {
           .header__menu-btn { display: none; }
         }
         .header__link {
-          padding: 0.5rem 0.85rem;
-          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          padding: 0.1rem 0.55rem;
+          border-radius: 0.35rem;
           font-weight: 700;
+          font-size: 1.05rem;
+          line-height: 1.25;
+          transition: all 0.2s ease;
           border: 2px solid transparent;
+          background: transparent;
+        }
+        .header__link:hover {
+          background: rgba(26, 26, 26, 0.06);
         }
         .header__link--active {
-          background: var(--lb-cheese);
+          background: transparent;
           border-color: var(--lb-ink);
-          box-shadow: var(--lb-shadow-sm);
+          box-shadow: none;
+        }
+        .header__link--active:hover {
+          background: rgba(26, 26, 26, 0.04);
+          border-color: var(--lb-ink);
         }
         .header__menu-btn {
-          min-width: 44px;
-          min-height: 44px;
-          padding: 8px;
-          border: 2px solid var(--lb-ink);
-          border-radius: 12px;
-          background: var(--lb-white);
-          box-shadow: var(--lb-shadow-sm);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 34px;
+          min-height: 34px;
+          padding: 4px;
+          border: none;
+          border-radius: 0.35rem;
+          background: transparent;
+          box-shadow: none;
         }
         .header__burger { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .header__mobile-active {
-          background: var(--lb-cheese) !important;
+          background: transparent !important;
+          border: 2px solid var(--lb-ink) !important;
+          box-shadow: none !important;
         }
         .sr-only {
           position: absolute;

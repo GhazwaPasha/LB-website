@@ -11,7 +11,7 @@ export function Footer() {
         paddingBottom: 'calc(2rem + var(--lb-safe-bottom))',
         background: 'var(--lb-ink)',
         color: 'var(--lb-cream)',
-        borderTop: '3px solid var(--lb-ink)',
+        borderTop: 'none',
       }}
     >
       <div className="lb-container" style={{ display: 'grid', gap: '1.5rem' }}>

@@ -7,22 +7,31 @@ export type Location = {
   phone: string
 }
 
+/** IDs align with menu keys in `menu.ts` */
 export const locations: Location[] = [
   {
-    id: 'downtown',
-    name: 'Downtown flagship',
-    address: '120 Heart Ave, City Center',
-    hours: 'Sun–Thu 11a–10p · Fri–Sat 11a–12a',
-    mapUrl: 'https://maps.google.com',
-    phone: '+1 (555) 010-0142',
+    id: 'chiniot',
+    name: 'Love Bites — Chiniot',
+    address: 'Main bazaar / city center, Chiniot',
+    hours: 'Daily 12p–11p',
+    mapUrl: 'https://maps.google.com/?q=Chiniot+Pakistan',
+    phone: '+92 300 0000000',
   },
   {
-    id: 'west',
-    name: 'Westside patio',
-    address: '88 Crown Crust Blvd, West End',
-    hours: 'Daily 11a–11p',
-    mapUrl: 'https://maps.google.com',
-    phone: '+1 (555) 010-0199',
+    id: 'sargodha',
+    name: 'Love Bites — Sargodha',
+    address: 'Near clock tower, Sargodha',
+    hours: 'Daily 12p–11p',
+    mapUrl: 'https://maps.google.com/?q=Sargodha+Pakistan',
+    phone: '+92 301 0000000',
+  },
+  {
+    id: 'faisalabad',
+    name: 'Love Bites — Faisalabad',
+    address: 'Commercial district, Faisalabad',
+    hours: 'Daily 12p–12a',
+    mapUrl: 'https://maps.google.com/?q=Faisalabad+Pakistan',
+    phone: '+92 302 0000000',
   },
 ]
 

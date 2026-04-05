@@ -1,5 +1,6 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useInView } from 'framer-motion'
 import type { ReactNode } from 'react'
+import { useRef } from 'react'
 
 type Props = {
   children: ReactNode
@@ -9,12 +10,15 @@ type Props = {
 
 export function Reveal({ children, delay = 0, className }: Props) {
   const reduce = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-48px' })
+
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial={reduce ? false : { opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-48px' }}
+      animate={isInView ? { opacity: 1, y: 0 } : undefined}
       transition={
         reduce
           ? { duration: 0 }

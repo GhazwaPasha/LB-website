@@ -73,8 +73,8 @@ export function About() {
                 maxWidth: '320px',
                 marginInline: 'auto',
                 borderRadius: 'var(--lb-radius-lg)',
-                border: '2px solid var(--lb-ink)',
-                boxShadow: 'var(--lb-shadow-sm)',
+                border: 'none',
+                boxShadow: 'var(--lb-shadow)',
                 background: 'var(--lb-white)',
               }}
               whileHover={reduce ? undefined : { scale: 1.02, rotate: -1 }}
@@ -98,9 +98,9 @@ export function About() {
                   gap: '1rem',
                   padding: '1.5rem',
                   borderRadius: 'var(--lb-radius-lg)',
-                  border: '2px solid var(--lb-ink)',
+                  border: 'none',
                   background: 'var(--lb-white)',
-                  boxShadow: 'var(--lb-shadow-sm)',
+                  boxShadow: 'var(--lb-shadow)',
                 }}
               >
                 <span
@@ -109,8 +109,9 @@ export function About() {
                     fontSize: '1.1rem',
                     padding: '0.35rem 0.65rem',
                     borderRadius: 12,
-                    border: '2px solid var(--lb-ink)',
+                    border: 'none',
                     background: 'var(--lb-cheese)',
+                    boxShadow: 'var(--lb-shadow-sm)',
                     height: 'fit-content',
                   }}
                 >
@@ -132,7 +133,7 @@ export function About() {
             style={{
               padding: '1.5rem',
               borderRadius: 'var(--lb-radius-lg)',
-              border: '2px solid var(--lb-ink)',
+              border: 'none',
               background: 'linear-gradient(135deg, var(--lb-cyan), var(--lb-white))',
               boxShadow: 'var(--lb-shadow)',
             }}
