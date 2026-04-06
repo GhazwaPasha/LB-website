@@ -27,6 +27,21 @@ export function softenForCardBackground(rgb: Rgb): Rgb {
 }
 
 /**
+ * Stage backdrop: match sampled product color closely (like a flat poster panel).
+ * Only tiny corrections for near-black / near-white averages so ink text still reads.
+ */
+export function tuneProductStageBackground(rgb: Rgb): Rgb {
+  const L = brightness(rgb)
+  if (L < 0.06) return blendWithWhite(rgb, 0.1)
+  if (L > 0.97) return blendWithWhite(rgb, -0.035)
+  return rgb
+}
+
+export function rgbToCss(rgb: Rgb): string {
+  return `rgb(${rgb.r} ${rgb.g} ${rgb.b})`
+}
+
+/**
  * Downsample image to a small canvas and average opaque pixels (same-origin only).
  */
 export function getAverageColorFromImageSrc(src: string): Promise<Rgb | null> {

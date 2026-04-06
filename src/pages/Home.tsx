@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
+import { NewKidsProductStage } from '../components/NewKidsProductStage'
 import { Reveal } from '../components/Reveal'
+import { newKidsProductSlides } from '../data/newKidsManifest'
 import { SITE_NAME, usePageTitle } from '../hooks/usePageTitle'
 
 export function Home() {
@@ -12,10 +14,11 @@ export function Home() {
   const location = useLocation()
 
   return (
-    <main style={{ flex: 1 }} key={location.key}>
+    <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0 }} key={location.key}>
       <section
         style={{
           position: 'relative',
+          margin: 0,
           paddingTop: 'clamp(0.5rem, 2vw, 1rem)',
           paddingBottom: 'clamp(2rem, 6vw, 4rem)',
           overflow: 'hidden',
@@ -59,7 +62,7 @@ export function Home() {
                 letterSpacing: '-0.03em',
               }}
             >
-              ALL YOU <span className="lb-outline-text">NEED IS</span>
+              ALL YOU <span className="lb-outline-text">NEED</span> IS
               <br />
               LOVE BITES
               <br />
@@ -84,39 +87,69 @@ export function Home() {
         </div>
       </section>
 
+      {newKidsProductSlides.length > 0 ? (
+        <Reveal>
+          <section
+            aria-label="New kids in town"
+            style={{
+              margin: 0,
+              padding: 0,
+              background: 'transparent',
+              border: 'none',
+            }}
+          >
+            <NewKidsProductStage
+              slides={newKidsProductSlides}
+              reduceMotion={!!reduce}
+              description={
+                <>
+                  Fresh faces on the lineup — say hello to <strong>Long Shots Pizza</strong>. Here’s a first look;
+                  find them on the menu when your store’s stocked.
+                </>
+              }
+            />
+          </section>
+        </Reveal>
+      ) : null}
+
       <Reveal>
         <section
+          aria-label="Poster"
           style={{
+            margin: 0,
             background: 'var(--lb-cyan)',
-            borderBlock: 'none',
-            paddingBlock: 'clamp(3rem, 8vw, 5rem)',
+            color: 'var(--lb-ink)',
+            border: 'none',
+            paddingTop: 'clamp(1.25rem, 4vw, 2rem)',
+            paddingBottom: 'clamp(3rem, 8vw, 5rem)',
           }}
         >
-          <div className="lb-container" style={{ display: 'grid', gap: '1.25rem', alignItems: 'center' }}>
+          <div className="lb-container" style={{ position: 'relative', zIndex: 1, display: 'grid', gap: '1rem' }}>
             <div style={{ display: 'grid', gap: '0.5rem' }}>
               <h2 style={{ margin: 0, fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800 }}>
                 Poster energy, real food
               </h2>
-              <p style={{ margin: 0, maxWidth: '40rem', fontWeight: 500 }}>
+              <p style={{ margin: 0, fontWeight: 500 }}>
                 Same vibe as our drops: bold color, chunky type, and line-art chaos. Pull up with friends —
                 we saved you a slice.
               </p>
             </div>
-            <motion.img
-              src="/brand/poster-love-bites.png"
-              alt="Love Bites illustrated poster with pizza and friends"
-              loading="lazy"
-              style={{
-                width: '100%',
-                maxWidth: '520px',
-                marginInline: 'auto',
-                borderRadius: 'var(--lb-radius-lg)',
-                border: 'none',
-                boxShadow: 'var(--lb-shadow)',
-              }}
-              whileHover={reduce ? undefined : { rotate: -1.5, scale: 1.01 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            />
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <motion.img
+                src="/brand/poster-love-bites.png"
+                alt="Love Bites illustrated poster with pizza and friends"
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  maxWidth: '520px',
+                  borderRadius: 'var(--lb-radius-lg)',
+                  border: 'none',
+                  boxShadow: 'var(--lb-shadow)',
+                }}
+                whileHover={reduce ? undefined : { rotate: -1.5, scale: 1.01 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              />
+            </div>
           </div>
         </section>
       </Reveal>

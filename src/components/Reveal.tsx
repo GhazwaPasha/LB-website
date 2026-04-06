@@ -17,6 +17,7 @@ export function Reveal({ children, delay = 0, className }: Props) {
     <motion.div
       ref={ref}
       className={className}
+      style={{ margin: 0 }}
       initial={reduce ? false : { opacity: 0, y: 22 }}
       animate={isInView ? { opacity: 1, y: 0 } : undefined}
       transition={
