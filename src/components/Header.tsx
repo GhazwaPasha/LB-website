@@ -13,7 +13,7 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
   const { pathname } = useLocation()
-  const isMenuPage = pathname === '/menu'
+  const isMenuPage = pathname === '/menu' || pathname.startsWith('/menu/')
 
   return (
     <header

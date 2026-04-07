@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   MENU_LOCATION_IDS,
   menuByLocation,
   menuLocationHeroImage,
   menuLocationHeroScale,
+  menuLocationHref,
   menuLocationLabels,
   type MenuLocationId,
   isMenuLocationId,
@@ -15,24 +17,18 @@ import { usePageTitle } from '../hooks/usePageTitle'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
 
-function readStoredMenuLocation(): MenuLocationId | '' {
-  if (typeof window === 'undefined') return ''
-  try {
-    const raw = sessionStorage.getItem(MENU_LOCATION_STORAGE_KEY)
-    if (raw && isMenuLocationId(raw)) return raw
-  } catch {
-    /* ignore */
-  }
-  return ''
-}
-
 export function MenuPage() {
-  const initialLocation = readStoredMenuLocation()
-  const [locationId, setLocationId] = useState<MenuLocationId | ''>(initialLocation)
+  const { locationId: locationSlug } = useParams<{ locationId?: string }>()
+  const navigate = useNavigate()
+
+  const invalidSlug =
+    Boolean(locationSlug) && !isMenuLocationId(locationSlug as string)
+
+  const locationId: MenuLocationId | '' =
+    locationSlug && isMenuLocationId(locationSlug) ? locationSlug : ''
+
   const menuCategories = locationId ? menuByLocation[locationId] : null
-  const [active, setActive] = useState(() =>
-    initialLocation ? (menuByLocation[initialLocation][0]?.id ?? '') : '',
-  )
+  const [active, setActive] = useState('')
   const [lightbox, setLightbox] = useState<ProductLightboxPayload | null>(null)
   const reduce = useReducedMotion()
 
@@ -48,16 +44,17 @@ export function MenuPage() {
     })
   }, [locationId])
 
-  const handleLocationChange = useCallback((next: MenuLocationId) => {
-    setLocationId(next)
-    try {
-      sessionStorage.setItem(MENU_LOCATION_STORAGE_KEY, next)
-    } catch {
-      /* ignore */
-    }
-    const nextMenu = menuByLocation[next]
-    setActive(nextMenu[0]?.id ?? '')
-  }, [])
+  const handleLocationChange = useCallback(
+    (next: MenuLocationId) => {
+      navigate(menuLocationHref(next))
+      try {
+        sessionStorage.setItem(MENU_LOCATION_STORAGE_KEY, next)
+      } catch {
+        /* ignore */
+      }
+    },
+    [navigate],
+  )
 
   usePageTitle(
     locationId ? `Menu — ${menuLocationLabels[locationId]}` : 'Menu',
@@ -70,6 +67,10 @@ export function MenuPage() {
     if (!menuCategories) return undefined
     return menuCategories.find((c) => c.id === active) ?? menuCategories[0]
   }, [active, menuCategories])
+
+  if (invalidSlug) {
+    return <Navigate to="/menu" replace />
+  }
 
   return (
     <main style={{ flex: 1, paddingBottom: '2rem' }}>
@@ -195,7 +196,8 @@ export function MenuPage() {
         </div>
       </section>
 
-      <section className="lb-container" style={{ paddingTop: 'clamp(1.25rem, 4vw, 2rem)' }}>
+      <section className="lb-full-bleed" style={{ borderTop: 'var(--lb-section-rule)' }}>
+        <div className="lb-container" style={{ paddingTop: 'clamp(1.25rem, 4vw, 2rem)' }}>
         <Reveal>
           <h1 style={{ margin: '0 0 1rem', fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: 800 }}>MENU</h1>
         </Reveal>
@@ -365,6 +367,7 @@ export function MenuPage() {
             </ul>
           </motion.div>
         )}
+        </div>
       </section>
       <ProductImageLightbox payload={lightbox} onClose={() => setLightbox(null)} />
     </main>

@@ -18,7 +18,6 @@ export function About() {
       <section
         style={{
           background: 'var(--lb-mustard)',
-          borderBottom: '2px solid var(--lb-ink)',
           paddingBlock: 'clamp(3rem, 8vw, 5rem)',
         }}
       >
@@ -41,7 +40,7 @@ export function About() {
       <section
         style={{
           background: 'var(--lb-cream)',
-          borderBlock: '2px solid var(--lb-ink)',
+          borderBlock: 'var(--lb-section-rule)',
           paddingBlock: 'clamp(3rem, 8vw, 5rem)',
         }}
       >

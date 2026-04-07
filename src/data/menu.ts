@@ -427,3 +427,8 @@ export const menuByLocation: Record<MenuLocationId, MenuCategory[]> = {
 export function isMenuLocationId(value: string): value is MenuLocationId {
   return (MENU_LOCATION_IDS as readonly string[]).includes(value)
 }
+
+/** Path segment for React Router, e.g. `/menu/chiniot` */
+export function menuLocationHref(id: MenuLocationId): string {
+  return `/menu/${id}`
+}

@@ -11,6 +11,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="menu/:locationId" element={<MenuPage />} />
         <Route path="menu" element={<MenuPage />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />

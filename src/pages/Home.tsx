@@ -1,5 +1,7 @@
+import type { CSSProperties } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
+import chevyDoodleUrl from '../../chevy.png'
 import { NewKidsProductStage } from '../components/NewKidsProductStage'
 import { Reveal } from '../components/Reveal'
 import { newKidsProductSlides } from '../data/newKidsManifest'
@@ -154,10 +156,28 @@ export function Home() {
         </section>
       </Reveal>
 
-      <section className="lb-container" style={{ paddingBlock: 'clamp(3rem, 8vw, 5rem)' }}>
+      <section
+        className="lb-full-bleed lb-more-you-know"
+        style={
+          {
+            paddingTop: 'clamp(1.25rem, 4vw, 2rem)',
+            paddingBottom: 'clamp(3rem, 8vw, 5rem)',
+            ['--lb-chevy-doodle' as string]: `url(${chevyDoodleUrl})`,
+          } as CSSProperties
+        }
+      >
+        <div className="lb-container lb-more-you-know__inner">
         <Reveal>
-          <h2 style={{ margin: '0 0 1rem', fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800 }}>
-            Bento board
+          <h2
+            style={{
+              margin: '0 0 1rem',
+              fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            More you should know
           </h2>
         </Reveal>
         <div
@@ -168,75 +188,24 @@ export function Home() {
           }}
         >
           <Reveal delay={0.05}>
-            <motion.div whileHover={reduce ? undefined : { y: -4 }} transition={{ type: 'spring', stiffness: 400, damping: 25 }}>
-              <Link
-                to="/menu"
-                style={{
-                  display: 'block',
-                  padding: '1.5rem',
-                  borderRadius: 'var(--lb-radius-lg)',
-                  border: 'none',
-                  background: 'var(--lb-cheese)',
-                  boxShadow: 'var(--lb-shadow)',
-                  fontWeight: 800,
-                  fontSize: '1.35rem',
-                  minHeight: '140px',
-                }}
-              >
+            <Link to="/menu" className="lb-know-card lb-know-card--menu">
               Menu →
-              <span style={{ display: 'block', marginTop: '0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-                Burgers, pizza, sides, sips
-              </span>
-              </Link>
-            </motion.div>
+              <span className="lb-know-card__sub">Burgers, pizza, sides, sips</span>
+            </Link>
           </Reveal>
           <Reveal delay={0.1}>
-            <motion.div whileHover={reduce ? undefined : { y: -4 }} transition={{ type: 'spring', stiffness: 400, damping: 25 }}>
-              <Link
-              to="/about"
-              style={{
-                display: 'block',
-                padding: '1.5rem',
-                borderRadius: 'var(--lb-radius-lg)',
-                border: 'none',
-                background: 'var(--lb-white)',
-                boxShadow: 'var(--lb-shadow)',
-                fontWeight: 800,
-                fontSize: '1.35rem',
-                minHeight: '140px',
-              }}
-            >
+            <Link to="/about" className="lb-know-card lb-know-card--story">
               Our story →
-              <span style={{ display: 'block', marginTop: '0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-                How Love Bites got loud
-              </span>
-              </Link>
-            </motion.div>
+              <span className="lb-know-card__sub">How Love Bites got loud</span>
+            </Link>
           </Reveal>
           <Reveal delay={0.15}>
-            <motion.div whileHover={reduce ? undefined : { y: -4 }} transition={{ type: 'spring', stiffness: 400, damping: 25 }}>
-              <Link
-              to="/contact"
-              style={{
-                display: 'block',
-                padding: '1.5rem',
-                borderRadius: 'var(--lb-radius-lg)',
-                border: 'none',
-                background: 'var(--lb-orange)',
-                color: 'var(--lb-ink)',
-                boxShadow: 'var(--lb-shadow)',
-                fontWeight: 800,
-                fontSize: '1.35rem',
-                minHeight: '140px',
-              }}
-            >
+            <Link to="/contact" className="lb-know-card lb-know-card--contact">
               Contact →
-              <span style={{ display: 'block', marginTop: '0.5rem', fontSize: '1rem', fontWeight: 600 }}>
-                Hours, maps, group hangs
-              </span>
-              </Link>
-            </motion.div>
+              <span className="lb-know-card__sub">Hours, maps, group hangs</span>
+            </Link>
           </Reveal>
+        </div>
         </div>
       </section>
     </main>
