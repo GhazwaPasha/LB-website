@@ -26,6 +26,7 @@ export function Home() {
           overflow: 'hidden',
           background: 'var(--lb-orange)',
           color: 'var(--lb-ink)',
+          borderBottom: 'var(--lb-section-rule)',
         }}
       >
         {!reduce && (

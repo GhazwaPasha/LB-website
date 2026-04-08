@@ -240,14 +240,13 @@ export function MenuPage() {
                 style={{
                   position: 'relative',
                   padding: '0.28rem 1rem',
-                  borderRadius: '0.5rem',
-                  border: isActive ? '2px solid var(--lb-ink)' : '2px solid transparent',
+                  borderRadius: '0.35rem',
+                  border: isActive ? '2px solid var(--lb-orange)' : '2px solid var(--lb-ink)',
                   fontWeight: 800,
                   fontFamily: 'inherit',
                   fontSize: '1rem',
                   background: 'var(--lb-cream)',
                   boxShadow: 'none',
-                  overflow: 'hidden',
                 }}
               >
                 <span style={{ position: 'relative', zIndex: 1 }}>{cat.shortTitle}</span>
@@ -278,12 +277,25 @@ export function MenuPage() {
               {category.items.map((item, index) => {
                 const openLightboxForItem = () => {
                   if (!item.image) return
+                  const variantLines =
+                    item.variants && item.variants.length > 0
+                      ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
+                      : ''
+                  const desc =
+                    item.description.trim() ||
+                    variantLines ||
+                    (item.tags && item.tags.length > 0 ? item.tags.join('\n') : undefined)
+                  const lightboxPrice =
+                    item.price.trim() ||
+                    (item.variants && item.variants.length > 0
+                      ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
+                      : '')
                   setLightbox({
                     src: item.image,
                     alt: `${item.name} — Love Bites`,
                     title: item.name,
-                    price: item.price,
-                    description: item.description,
+                    price: lightboxPrice,
+                    description: desc,
                   })
                 }
 
@@ -340,17 +352,36 @@ export function MenuPage() {
                       )}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
                         <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, lineHeight: 1.2 }}>{item.name}</h3>
-                        <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.85, lineHeight: 1.4 }}>{item.description}</p>
+                        {item.description.trim() ? (
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: '0.9rem',
+                              opacity: 0.85,
+                              lineHeight: 1.4,
+                              whiteSpace: 'pre-line',
+                            }}
+                          >
+                            {item.description}
+                          </p>
+                        ) : null}
                         {item.tags && item.tags.length > 0 && (
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: 'auto' }}>
-                            {item.tags.map((tag) => (
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                              gap: '0.35rem',
+                            }}
+                          >
+                            {item.tags.map((tag, ti) => (
                               <span
-                                key={tag}
+                                key={`${item.id}-tag-${ti}`}
                                 className="lb-menu-item-card__tag"
                                 style={{
-                                  padding: '0.2rem 0.5rem',
-                                  fontSize: '0.75rem',
+                                  padding: '0.2rem 0.45rem',
+                                  fontSize: '0.7rem',
                                   fontWeight: 700,
+                                  lineHeight: 1.25,
                                 }}
                               >
                                 {tag}
@@ -358,7 +389,31 @@ export function MenuPage() {
                             ))}
                           </div>
                         )}
-                        <p style={{ margin: '0.5rem 0 0', fontWeight: 800, fontSize: '1.05rem' }}>{item.price}</p>
+                        {item.variants && item.variants.length > 0 ? (
+                          <div className="lb-menu-item-card__variants-row">
+                            {item.variants.map((v, vi) => (
+                              <div
+                                key={`${item.id}-v-${vi}`}
+                                className="lb-menu-item-card__variant-chip"
+                              >
+                                <span className="lb-menu-item-card__variant-label">
+                                  {v.size} - {v.price}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : item.price.trim() ? (
+                          <p
+                            style={{
+                              margin: 0,
+                              marginTop: 'auto',
+                              fontWeight: 800,
+                              fontSize: '1.05rem',
+                            }}
+                          >
+                            {item.price}
+                          </p>
+                        ) : null}
                       </div>
                     </motion.div>
                   </motion.li>

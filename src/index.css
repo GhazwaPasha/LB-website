@@ -333,6 +333,37 @@ button {
   background: rgb(255 251 247 / 0.85);
 }
 
+/* Size–price chips: "M - 1250" in one row */
+.lb-menu-item-card__variants-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: auto;
+}
+
+.lb-menu-item-card__variant-chip {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.35rem;
+  border: 2px solid var(--lb-ink);
+  box-shadow: none;
+  background: rgb(255 251 247 / 0.85);
+  flex: 0 1 auto;
+}
+
+.lb-menu-item-card__variant-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--lb-ink);
+  white-space: nowrap;
+}
+
 /* Break out of .lb-container to full viewport width */
 .lb-full-bleed {
   width: 100vw;

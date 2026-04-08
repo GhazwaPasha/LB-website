@@ -67,7 +67,7 @@ public/
 
 ## Editing content
 
-- **Menu items:** `src/data/menu.ts`
+- **Menu items:** Edit CSVs in `Menu/` (`Menu Chiniot.csv`, etc.), then run **`npm run menu:build`** to regenerate `src/data/menu/*.json`. Shape is validated at startup via `parseMenu.ts`. Types: `types.ts`.
 - **Locations / contact:** `src/data/locations.ts`
 - **Brand colors:** `src/index.css` (`:root` CSS variables)
 

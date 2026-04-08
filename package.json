@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "menu:build": "node scripts/build-menu-from-csv.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
