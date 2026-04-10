@@ -190,19 +190,19 @@ export function Home() {
         >
           <Reveal delay={0.05}>
             <Link to="/menu" className="lb-know-card lb-know-card--menu">
-              Menu →
+              Menu
               <span className="lb-know-card__sub">Burgers, pizza, sides, sips</span>
             </Link>
           </Reveal>
           <Reveal delay={0.1}>
             <Link to="/about" className="lb-know-card lb-know-card--story">
-              Our story →
+              Our story
               <span className="lb-know-card__sub">How Love Bites got loud</span>
             </Link>
           </Reveal>
           <Reveal delay={0.15}>
             <Link to="/contact" className="lb-know-card lb-know-card--contact">
-              Contact →
+              Contact
               <span className="lb-know-card__sub">Hours, maps, group hangs</span>
             </Link>
           </Reveal>

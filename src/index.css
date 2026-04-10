@@ -229,25 +229,35 @@ button {
 }
 
 .lb-know-card--menu {
-  background: var(--lb-lettuce);
-  color: var(--lb-white);
+  background: var(--lb-cheese);
+  color: var(--lb-ink);
 }
 
 .lb-know-card--menu:hover,
 .lb-know-card--menu:active {
-  color: var(--lb-white);
+  color: var(--lb-ink);
 }
 
 .lb-know-card--story {
-  background: var(--lb-cheese);
+  background: var(--lb-orange);
+  color: var(--lb-ink);
+}
+
+.lb-know-card--story:hover,
+.lb-know-card--story:active {
+  background: #ffa14d;
+  color: var(--lb-ink);
 }
 
 .lb-know-card--contact {
-  background: rgb(255 251 247 / 0.45);
+  background: var(--lb-lettuce);
+  color: var(--lb-white);
 }
 
-.lb-know-card--contact:hover {
-  background: var(--lb-white);
+.lb-know-card--contact:hover,
+.lb-know-card--contact:active {
+  background: #3d9550;
+  color: var(--lb-white);
 }
 
 .lb-know-card__sub {
