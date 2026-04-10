@@ -16,18 +16,20 @@ export function Footer() {
         <Link
           to="/"
           style={{
-            display: 'inline-flex',
-            alignSelf: 'start',
+            display: 'block',
+            justifySelf: 'start',
             lineHeight: 0,
           }}
         >
           <img
             src="/brand/logo-white.png"
             alt="Love Bites"
+            decoding="async"
             style={{
-              width: '100%',
-              height: 'auto',
-              maxWidth: 'min(100%, 420px)',
+              width: 'min(11.5rem, 72vw)',
+              height: 'clamp(1.4rem, 3.2vw, 1.85rem)',
+              objectFit: 'contain',
+              objectPosition: 'left center',
               display: 'block',
             }}
           />
