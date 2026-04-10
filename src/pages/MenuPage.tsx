@@ -14,6 +14,7 @@ import {
 import { ProductImageLightbox, type ProductLightboxPayload } from '../components/ProductImageLightbox'
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { publicUrl } from '../utils/publicUrl'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
 
@@ -95,7 +96,7 @@ export function MenuPage() {
             <AnimatePresence initial={false} mode="wait">
               <motion.img
                 key={locationId}
-                src={menuLocationHeroImage[locationId]}
+                src={publicUrl(menuLocationHeroImage[locationId])}
                 alt=""
                 aria-hidden
                 initial={
@@ -291,7 +292,7 @@ export function MenuPage() {
                       ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
                       : '')
                   setLightbox({
-                    src: item.image,
+                    src: publicUrl(item.image),
                     alt: `${item.name} — Love Bites`,
                     title: item.name,
                     price: lightboxPrice,
@@ -335,7 +336,7 @@ export function MenuPage() {
                       {item.image && (
                         <div className="lb-menu-item-card__thumb" style={{ margin: '0 0 0.75rem 0' }}>
                           <img
-                            src={item.image}
+                            src={publicUrl(item.image)}
                             alt=""
                             width={240}
                             height={240}

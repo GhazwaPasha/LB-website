@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { publicUrl } from '../utils/publicUrl'
 
 const milestones = [
   { year: '2019', title: 'First bite', body: 'Pop-up nights, loud music, louder flavors.' },
@@ -64,7 +65,7 @@ export function About() {
           </Reveal>
           <Reveal delay={0.06}>
             <motion.img
-              src="/brand/art-heart-burger-line.png"
+              src={publicUrl('/brand/art-heart-burger-line.png')}
               alt="Love Bites heart-shaped burger line illustration"
               loading="lazy"
               style={{

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { publicUrl } from '../utils/publicUrl'
 
 export function Footer() {
   return (
@@ -22,7 +23,7 @@ export function Footer() {
           }}
         >
           <img
-            src="/brand/logo-white.png"
+            src={publicUrl('/brand/logo-white.png')}
             alt="Love Bites"
             decoding="async"
             style={{

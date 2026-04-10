@@ -6,5 +6,14 @@ const base = process.env.VITE_BASE_PATH?.trim() || '/'
 
 export default defineConfig({
   base,
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'inject-base-in-index-html',
+      transformIndexHtml(html) {
+        const normalized = base === '/' ? '/' : base.endsWith('/') ? base : `${base}/`
+        return html.replace(/%BASE_URL%/g, normalized)
+      },
+    },
+  ],
 })

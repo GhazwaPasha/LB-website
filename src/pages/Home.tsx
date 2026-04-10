@@ -6,6 +6,7 @@ import { NewKidsProductStage } from '../components/NewKidsProductStage'
 import { Reveal } from '../components/Reveal'
 import { newKidsProductSlides } from '../data/newKidsManifest'
 import { SITE_NAME, usePageTitle } from '../hooks/usePageTitle'
+import { publicUrl } from '../utils/publicUrl'
 
 export function Home() {
   usePageTitle(
@@ -31,7 +32,7 @@ export function Home() {
       >
         {!reduce && (
           <motion.img
-            src="/brand/art-heart-burger-line.png"
+            src={publicUrl('/brand/art-heart-burger-line.png')}
             alt=""
             aria-hidden
             style={{
@@ -139,7 +140,7 @@ export function Home() {
             </div>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
               <motion.img
-                src="/brand/poster-love-bites.png"
+                src={publicUrl('/brand/poster-love-bites.png')}
                 alt="Love Bites illustrated poster with pizza and friends"
                 loading="lazy"
                 style={{
