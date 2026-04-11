@@ -148,11 +148,14 @@ button {
   background: var(--lb-white);
 }
 
-/* Home hero CTAs — chunky offset-shadow poster buttons */
+/* Home hero CTAs — chunky offset-shadow poster buttons (match hero headline: caps + tracking) */
 .lb-btn--hero {
   min-height: 3.125rem;
   padding: 0.625rem 1.375rem;
-  font-size: 1.0625rem;
+  font-size: clamp(1rem, 2.6vw, 1.125rem);
+  font-weight: 800;
+  letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
+  text-transform: uppercase;
   border: 3px solid var(--lb-ink);
   border-radius: 0.55rem;
   box-shadow: none;
@@ -171,15 +174,20 @@ button {
 .lb-btn--hero-secondary {
   min-height: 3.125rem;
   padding: 0.625rem 1.375rem;
-  font-size: 1.0625rem;
-  background: rgb(255 251 247 / 0.45);
+  font-size: clamp(1rem, 2.6vw, 1.125rem);
+  font-weight: 800;
+  letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
+  text-transform: uppercase;
+  background: var(--lb-tomato);
+  color: var(--lb-white);
   border: 3px solid var(--lb-ink);
   border-radius: 0.55rem;
   box-shadow: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .lb-btn--hero-secondary:hover {
-  background: var(--lb-white);
+  background: color-mix(in srgb, var(--lb-tomato) 78%, var(--lb-white));
   transform: translate(-2px, -3px);
   box-shadow: none;
 }

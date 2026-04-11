@@ -62,15 +62,14 @@ export function Home() {
                 margin: 0,
                 fontWeight: 800,
                 fontSize: 'clamp(2.25rem, 6vw, 3.5rem)',
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
+                lineHeight: 1.08,
+                letterSpacing: 'clamp(0.015em, 0.28vw, 0.035em)',
+                textTransform: 'uppercase',
               }}
             >
-              ALL YOU <span className="lb-outline-text">NEED</span> IS
+              Food Never Breaks
               <br />
-              LOVE BITES
-              <br />
-              & PIZZA
+              Your Heart!
             </p>
           </motion.div>
 
@@ -197,7 +196,7 @@ export function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <Link to="/about" className="lb-know-card lb-know-card--story">
-              Our story
+              Our Story
               <span className="lb-know-card__sub">How Love Bites got loud</span>
             </Link>
           </Reveal>

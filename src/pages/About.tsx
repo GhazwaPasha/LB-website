@@ -11,7 +11,7 @@ const milestones = [
 ]
 
 export function About() {
-  usePageTitle('About', 'The Love Bites story — how we grew from pop-ups to a bold burger and pizza chain.')
+  usePageTitle('Our Story', 'The Love Bites story — how we grew from pop-ups to a bold burger and pizza chain.')
   const reduce = useReducedMotion()
 
   return (
