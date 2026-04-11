@@ -84,7 +84,7 @@ export function Home() {
             <Link to="/menu" className="lb-btn lb-btn--hero">
               Peep the menu
             </Link>
-            <Link to="/contact" className="lb-btn lb-btn--hero-secondary">
+            <Link to="/spots" className="lb-btn lb-btn--hero-secondary">
               Find a spot
             </Link>
           </motion.div>
@@ -202,9 +202,15 @@ export function Home() {
             </Link>
           </Reveal>
           <Reveal delay={0.15}>
+            <Link to="/spots" className="lb-know-card lb-know-card--spots">
+              Our spots
+              <span className="lb-know-card__sub">All three restaurants — hours &amp; maps</span>
+            </Link>
+          </Reveal>
+          <Reveal delay={0.2}>
             <Link to="/contact" className="lb-know-card lb-know-card--contact">
               Contact
-              <span className="lb-know-card__sub">Hours, maps, group hangs</span>
+              <span className="lb-know-card__sub">Company phone, email &amp; office</span>
             </Link>
           </Reveal>
         </div>

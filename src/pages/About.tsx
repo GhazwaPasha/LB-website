@@ -18,23 +18,37 @@ export function About() {
     <main style={{ flex: 1, paddingBottom: '2.5rem' }}>
       <section
         style={{
+          position: 'relative',
+          margin: 0,
+          paddingTop: 'clamp(0.5rem, 2vw, 1rem)',
+          paddingBottom: 'clamp(2rem, 6vw, 4rem)',
+          overflow: 'hidden',
           background: 'var(--lb-mustard)',
-          paddingBlock: 'clamp(3rem, 8vw, 5rem)',
+          color: 'var(--lb-ink)',
         }}
       >
-        <div className="lb-container">
-          <motion.h1
-            style={{ margin: 0, fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: 800, maxWidth: '18ch' }}
-            initial={reduce ? false : { opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
+        <div
+          className="lb-container"
+          style={{ position: 'relative', zIndex: 1, display: 'grid', gap: '1rem' }}
+        >
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 380, damping: 32 }}
           >
-            We put love in the messy bits.
-          </motion.h1>
-          <p style={{ margin: '0.75rem 0 0', maxWidth: '36rem', fontWeight: 600 }}>
-            Love Bites is a chain that acts like a crew — bold colors, silly heart burgers, and plates made for
-            screenshots and second dates.
-          </p>
+            <h1
+              style={{
+                margin: 0,
+                maxWidth: '18ch',
+                fontWeight: 800,
+                fontSize: 'clamp(2.25rem, 6vw, 3.5rem)',
+                lineHeight: 1.05,
+                letterSpacing: '-0.03em',
+              }}
+            >
+              We put love in the messy bits.
+            </h1>
+          </motion.div>
         </div>
       </section>
 

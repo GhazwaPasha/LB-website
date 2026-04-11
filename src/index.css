@@ -23,6 +23,8 @@
   --lb-radius: 0.75rem;
   --lb-radius-lg: 1rem;
   --lb-font: 'Fredoka', system-ui, sans-serif;
+  /* Spot card CTAs — distinct from headings/body */
+  --lb-font-spot-actions: 'DM Sans', system-ui, sans-serif;
   /* Same idea as Tailwind max-w-screen-2xl (1536px) — wide desktop column */
   --lb-max: 1536px;
   --lb-safe-top: env(safe-area-inset-top, 0px);
@@ -249,15 +251,26 @@ button {
   color: var(--lb-ink);
 }
 
-.lb-know-card--contact {
+.lb-know-card--spots {
   background: var(--lb-lettuce);
   color: var(--lb-white);
 }
 
-.lb-know-card--contact:hover,
-.lb-know-card--contact:active {
+.lb-know-card--spots:hover,
+.lb-know-card--spots:active {
   background: #3d9550;
   color: var(--lb-white);
+}
+
+.lb-know-card--contact {
+  background: var(--lb-cyan);
+  color: var(--lb-ink);
+}
+
+.lb-know-card--contact:hover,
+.lb-know-card--contact:active {
+  background: #5ec4d4;
+  color: var(--lb-ink);
 }
 
 .lb-know-card__sub {
@@ -266,6 +279,152 @@ button {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
+}
+
+/* Spots — poster-style location cards (thick ink border, brand stripe, flat) */
+/* Match Home hero band: vertical rhythm + rule (text block uses same grid shell as Home) */
+.lb-spots-hero {
+  position: relative;
+  margin: 0;
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+  padding-bottom: clamp(2rem, 6vw, 4rem);
+  overflow: hidden;
+  background: var(--lb-tomato);
+  color: var(--lb-ink);
+  border-bottom: var(--lb-section-rule);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.lb-spots-list {
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.lb-spot-card {
+  --lb-spot-accent: var(--lb-cheese);
+  position: relative;
+  margin: 0;
+  padding: 1.35rem 1.35rem 1.4rem 1.5rem;
+  border-radius: 0.55rem;
+  border: 3px solid var(--lb-ink);
+  background: linear-gradient(
+    90deg,
+    var(--lb-spot-accent) 0,
+    var(--lb-spot-accent) 10px,
+    var(--lb-white) 10px
+  );
+  box-shadow: none;
+}
+
+.lb-spot-card--chiniot {
+  --lb-spot-accent: var(--lb-cheese);
+}
+
+.lb-spot-card--sargodha {
+  --lb-spot-accent: var(--lb-orange);
+}
+
+.lb-spot-card--faisalabad {
+  --lb-spot-accent: var(--lb-cyan);
+}
+
+.lb-spot-card__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.2rem, 3.5vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.lb-spot-card__address {
+  margin: 0 0 0.65rem;
+  font-weight: 600;
+  line-height: 1.45;
+  max-width: 40rem;
+}
+
+.lb-spot-card__hours {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--lb-cream);
+  color: var(--lb-ink);
+  border: 2px solid var(--lb-ink);
+  border-radius: 0.35rem;
+}
+
+.lb-spot-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.lb-spot-btn__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.lb-spot-card__actions .lb-btn {
+  min-height: 2.35rem;
+  gap: 0.45rem;
+  font-family: var(--lb-font-spot-actions);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 3px solid var(--lb-ink);
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+.lb-spot-card__actions .lb-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: none;
+}
+
+.lb-spot-card__actions .lb-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.lb-btn--spot-location {
+  background: var(--lb-white);
+  color: var(--lb-ink);
+}
+
+.lb-btn--spot-location:hover {
+  background: var(--lb-cream);
+}
+
+.lb-btn--spot-call {
+  background: var(--lb-tomato);
+  color: var(--lb-white);
+}
+
+.lb-btn--spot-call:hover {
+  filter: brightness(1.05);
+}
+
+.lb-btn--spot-wa {
+  background: var(--lb-lettuce);
+  color: var(--lb-white);
+}
+
+.lb-btn--spot-wa:hover {
+  filter: brightness(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-spot-card__actions .lb-btn:hover,
+  .lb-spot-card__actions .lb-btn:active {
+    transform: none;
+  }
 }
 
 .lb-btn--dark {

@@ -6,6 +6,7 @@ const nav = [
   { to: '/', label: 'Home', end: true },
   { to: '/menu', label: 'Menu' },
   { to: '/about', label: 'About' },
+  { to: '/spots', label: 'Spots' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -14,6 +15,8 @@ export function Header() {
   const reduce = useReducedMotion()
   const { pathname } = useLocation()
   const isMenuPage = pathname === '/menu' || pathname.startsWith('/menu/')
+  const isAboutPage = pathname === '/about'
+  const isSpotsPage = pathname === '/spots'
 
   return (
     <header
@@ -23,7 +26,13 @@ export function Header() {
         top: 0,
         zIndex: 50,
         paddingTop: 'var(--lb-safe-top)',
-        background: isMenuPage ? 'var(--lb-location-hero-matte)' : 'var(--lb-orange)',
+        background: isMenuPage
+          ? 'var(--lb-location-hero-matte)'
+          : isAboutPage
+            ? 'var(--lb-mustard)'
+            : isSpotsPage
+              ? 'var(--lb-tomato)'
+              : 'var(--lb-orange)',
         borderBottom: 'none',
         boxShadow: 'none',
       }}

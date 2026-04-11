@@ -4,6 +4,7 @@ import { Home } from './pages/Home'
 import { MenuPage } from './pages/MenuPage'
 import { About } from './pages/About'
 import { Contact } from './pages/Contact'
+import { Spots } from './pages/Spots'
 import { NotFound } from './pages/NotFound'
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="menu/:locationId" element={<MenuPage />} />
         <Route path="menu" element={<MenuPage />} />
         <Route path="about" element={<About />} />
+        <Route path="spots" element={<Spots />} />
         <Route path="contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Route>
