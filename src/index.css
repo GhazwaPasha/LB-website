@@ -29,6 +29,11 @@
   --lb-max: 1536px;
   --lb-safe-top: env(safe-area-inset-top, 0px);
   --lb-safe-bottom: env(safe-area-inset-bottom, 0px);
+  /*
+    Sticky menu category row — must be >= full `Header` height (~43px) or pills sit under the
+    header (z-index 50) and the top is clipped. Verified via chrome-devtools layout measurement.
+  */
+  --lb-menu-cats-sticky-top: calc(var(--lb-safe-top) + 2.8rem);
 }
 
 *,
@@ -691,4 +696,27 @@ button {
   .menu-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.lb-hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lb-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.lb-menu-category-sticky {
+  position: sticky;
+  top: var(--lb-menu-cats-sticky-top);
+  z-index: 40;
+  margin-bottom: 0.75rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.5rem;
+  background-color: var(--lb-cream);
+}
+
+.lb-menu-category-section {
+  scroll-margin-top: calc(var(--lb-menu-cats-sticky-top) + 2.85rem);
 }

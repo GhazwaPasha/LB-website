@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
@@ -8,6 +8,7 @@ import {
   menuLocationHeroScale,
   menuLocationHref,
   menuLocationLabels,
+  type MenuItem,
   type MenuLocationId,
   isMenuLocationId,
 } from '../data/menu'
@@ -17,6 +18,162 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
+
+/** Sentinel tab id — not used in menu JSON category ids */
+const MENU_CATEGORY_TAB_ALL = '__all__'
+
+function menuSectionDomId(locationId: MenuLocationId, categoryId: string) {
+  return `menu-section-${locationId}-${categoryId}`
+}
+
+type MenuItemListItemProps = {
+  item: MenuItem
+  index: number
+  reduce: boolean
+  setLightbox: (payload: ProductLightboxPayload | null) => void
+}
+
+function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItemProps) {
+  const openLightboxForItem = () => {
+    if (!item.image) return
+    const variantLines =
+      item.variants && item.variants.length > 0
+        ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
+        : ''
+    const desc =
+      item.description.trim() ||
+      variantLines ||
+      (item.tags && item.tags.length > 0 ? item.tags.join('\n') : undefined)
+    const lightboxPrice =
+      item.price.trim() ||
+      (item.variants && item.variants.length > 0
+        ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
+        : '')
+    setLightbox({
+      src: publicUrl(item.image),
+      alt: `${item.name} — Love Bites`,
+      title: item.name,
+      price: lightboxPrice,
+      description: desc,
+    })
+  }
+
+  return (
+    <motion.li
+      initial={reduce ? false : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 400,
+        damping: 32,
+        delay: reduce ? 0 : index * 0.05,
+      }}
+      style={{ display: 'flex', height: '100%', minHeight: 0 }}
+    >
+      <motion.div
+        className="lb-menu-item-card"
+        role={item.image ? 'button' : undefined}
+        tabIndex={item.image ? 0 : undefined}
+        aria-label={item.image ? `Open enlarged photo of ${item.name}` : undefined}
+        aria-haspopup={item.image ? 'dialog' : undefined}
+        whileHover={reduce ? undefined : { y: -4, transition: { type: 'spring', stiffness: 420, damping: 26 } }}
+        whileTap={reduce ? undefined : { y: 1, transition: { type: 'spring', stiffness: 500, damping: 28 } }}
+        onClick={item.image ? openLightboxForItem : undefined}
+        onKeyDown={
+          item.image
+            ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  openLightboxForItem()
+                }
+              }
+            : undefined
+        }
+      >
+        {item.image && (
+          <div className="lb-menu-item-card__thumb" style={{ margin: '0 0 0.75rem 0' }}>
+            <img
+              src={publicUrl(item.image)}
+              alt=""
+              width={240}
+              height={240}
+              draggable={false}
+              style={{
+                display: 'block',
+                width: '100%',
+                height: 'auto',
+                aspectRatio: '1',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
+        )}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+          <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, lineHeight: 1.2 }}>{item.name}</h3>
+          {item.description.trim() ? (
+            <p
+              style={{
+                margin: 0,
+                fontSize: '0.9rem',
+                opacity: 0.85,
+                lineHeight: 1.4,
+                whiteSpace: 'pre-line',
+              }}
+            >
+              {item.description}
+            </p>
+          ) : null}
+          {item.tags && item.tags.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.35rem',
+              }}
+            >
+              {item.tags.map((tag, ti) => (
+                <span
+                  key={`${item.id}-tag-${ti}`}
+                  className="lb-menu-item-card__tag"
+                  style={{
+                    padding: '0.2rem 0.45rem',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          {item.variants && item.variants.length > 0 ? (
+            <div className="lb-menu-item-card__variants-row">
+              {item.variants.map((v, vi) => (
+                <div key={`${item.id}-v-${vi}`} className="lb-menu-item-card__variant-chip">
+                  <span className="lb-menu-item-card__variant-label">
+                    {v.size} - {v.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : item.price.trim() ? (
+            <p
+              style={{
+                margin: 0,
+                marginTop: 'auto',
+                fontWeight: 800,
+                fontSize: '1.05rem',
+              }}
+            >
+              {item.price}
+            </p>
+          ) : null}
+        </div>
+      </motion.div>
+    </motion.li>
+  )
+}
 
 export function MenuPage() {
   const { locationId: locationSlug } = useParams<{ locationId?: string }>()
@@ -29,21 +186,61 @@ export function MenuPage() {
     locationSlug && isMenuLocationId(locationSlug) ? locationSlug : ''
 
   const menuCategories = locationId ? menuByLocation[locationId] : null
-  const [active, setActive] = useState('')
+  const [activeTab, setActiveTab] = useState<string>(MENU_CATEGORY_TAB_ALL)
   const [lightbox, setLightbox] = useState<ProductLightboxPayload | null>(null)
   const reduce = useReducedMotion()
+  const menuBrowseTopRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!locationId) {
-      setActive('')
+      setActiveTab(MENU_CATEGORY_TAB_ALL)
       return
     }
     const cats = menuByLocation[locationId]
-    setActive((prev) => {
-      const stillThere = cats.some((c) => c.id === prev)
-      return stillThere ? prev : (cats[0]?.id ?? '')
+    setActiveTab((prev) => {
+      if (prev === MENU_CATEGORY_TAB_ALL) return MENU_CATEGORY_TAB_ALL
+      return cats.some((c) => c.id === prev) ? prev : MENU_CATEGORY_TAB_ALL
     })
   }, [locationId])
+
+  const scrollCategoryIntoMenuBody = useCallback(
+    (categoryId: string) => {
+      if (!locationId) return
+      const el = document.getElementById(menuSectionDomId(locationId, categoryId))
+      el?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    },
+    [locationId, reduce],
+  )
+
+  const scrollActiveTabChipIntoView = useCallback(
+    (tabId: string) => {
+      if (tabId === MENU_CATEGORY_TAB_ALL) return
+      requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>(`[data-menu-category-tab="${CSS.escape(tabId)}"]`)
+          ?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' })
+      })
+    },
+    [reduce],
+  )
+
+  const selectCategoryTab = useCallback(
+    (next: string) => {
+      setActiveTab(next)
+      if (next === MENU_CATEGORY_TAB_ALL) {
+        menuBrowseTopRef.current?.scrollIntoView({
+          behavior: reduce ? 'auto' : 'smooth',
+          block: 'start',
+        })
+        return
+      }
+      requestAnimationFrame(() => {
+        scrollCategoryIntoMenuBody(next)
+        scrollActiveTabChipIntoView(next)
+      })
+    },
+    [reduce, scrollActiveTabChipIntoView, scrollCategoryIntoMenuBody],
+  )
 
   const handleLocationChange = useCallback(
     (next: MenuLocationId) => {
@@ -63,11 +260,6 @@ export function MenuPage() {
       ? `Love Bites menu for ${menuLocationLabels[locationId]} — burgers, pizza, sides, and drinks.`
       : 'Choose your Love Bites location to see the menu.',
   )
-
-  const category = useMemo(() => {
-    if (!menuCategories) return undefined
-    return menuCategories.find((c) => c.id === active) ?? menuCategories[0]
-  }, [active, menuCategories])
 
   if (invalidSlug) {
     return <Navigate to="/menu" replace />
@@ -219,209 +411,121 @@ export function MenuPage() {
         )}
 
         {locationId && menuCategories && (
-        <div
-          role="tablist"
-          aria-label="Menu categories"
-          style={{
-            display: 'flex',
-            gap: '0.5rem',
-            flexWrap: 'wrap',
-            marginBottom: '1.5rem',
-          }}
-        >
-          {menuCategories.map((cat) => {
-            const isActive = cat.id === category?.id
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setActive(cat.id)}
+          <div
+            ref={menuBrowseTopRef}
+            style={{
+              marginTop: '0.35rem',
+              scrollMarginTop: 'var(--lb-menu-cats-sticky-top)',
+            }}
+          >
+            <div className="lb-menu-category-sticky">
+              <div
+                role="tablist"
+                aria-label="Menu categories"
+                className="lb-hide-scrollbar"
                 style={{
-                  position: 'relative',
-                  padding: '0.28rem 1rem',
-                  borderRadius: '0.35rem',
-                  border: isActive ? '2px solid var(--lb-orange)' : '2px solid var(--lb-ink)',
-                  fontWeight: 800,
-                  fontFamily: 'inherit',
-                  fontSize: '1rem',
-                  background: 'var(--lb-cream)',
-                  boxShadow: 'none',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  flexWrap: 'nowrap',
+                  overflowX: 'auto',
+                  paddingBottom: '2px',
                 }}
               >
-                <span style={{ position: 'relative', zIndex: 1 }}>{cat.shortTitle}</span>
-              </button>
-            )
-          })}
-        </div>
-        )}
-
-        {locationId && category && (
-          <motion.div
-            key={`${locationId}-${category.id}`}
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 34 }}
-          >
-            <h2 style={{ margin: '0 0 0.35rem', fontSize: '1.5rem', fontWeight: 800 }}>{category.title}</h2>
-            <p style={{ margin: '0 0 1.25rem', maxWidth: '40rem' }}>{category.blurb}</p>
-
-            <ul
-              className="menu-grid"
-              style={{
-                listStyle: 'none',
-                margin: 0,
-                padding: 0,
-              }}
-            >
-              {category.items.map((item, index) => {
-                const openLightboxForItem = () => {
-                  if (!item.image) return
-                  const variantLines =
-                    item.variants && item.variants.length > 0
-                      ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
-                      : ''
-                  const desc =
-                    item.description.trim() ||
-                    variantLines ||
-                    (item.tags && item.tags.length > 0 ? item.tags.join('\n') : undefined)
-                  const lightboxPrice =
-                    item.price.trim() ||
-                    (item.variants && item.variants.length > 0
-                      ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
-                      : '')
-                  setLightbox({
-                    src: publicUrl(item.image),
-                    alt: `${item.name} — Love Bites`,
-                    title: item.name,
-                    price: lightboxPrice,
-                    description: desc,
-                  })
-                }
-
-                return (
-                  <motion.li
-                    key={`${locationId}-${item.id}`}
-                    initial={reduce ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 400,
-                      damping: 32,
-                      delay: reduce ? 0 : index * 0.05,
-                    }}
-                    style={{ display: 'flex', height: '100%', minHeight: 0 }}
-                  >
-                    <motion.div
-                      className="lb-menu-item-card"
-                      role={item.image ? 'button' : undefined}
-                      tabIndex={item.image ? 0 : undefined}
-                      aria-label={item.image ? `Open enlarged photo of ${item.name}` : undefined}
-                      aria-haspopup={item.image ? 'dialog' : undefined}
-                      whileHover={reduce ? undefined : { y: -4, transition: { type: 'spring', stiffness: 420, damping: 26 } }}
-                      whileTap={reduce ? undefined : { y: 1, transition: { type: 'spring', stiffness: 500, damping: 28 } }}
-                      onClick={item.image ? openLightboxForItem : undefined}
-                      onKeyDown={
-                        item.image
-                          ? (e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                openLightboxForItem()
-                              }
-                            }
-                          : undefined
-                      }
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === MENU_CATEGORY_TAB_ALL}
+                  onClick={() => selectCategoryTab(MENU_CATEGORY_TAB_ALL)}
+                  style={{
+                    flex: '0 0 auto',
+                    position: 'relative',
+                    padding: '0.28rem 1rem',
+                    borderRadius: '0.35rem',
+                    border:
+                      activeTab === MENU_CATEGORY_TAB_ALL
+                        ? '2px solid var(--lb-orange)'
+                        : '2px solid var(--lb-ink)',
+                    fontWeight: 800,
+                    fontFamily: 'inherit',
+                    fontSize: '1rem',
+                    background: 'var(--lb-cream)',
+                    boxShadow: 'none',
+                  }}
+                >
+                  <span style={{ position: 'relative', zIndex: 1 }}>All</span>
+                </button>
+                {menuCategories.map((cat) => {
+                  const isActive = cat.id === activeTab
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      data-menu-category-tab={cat.id}
+                      onClick={() => selectCategoryTab(cat.id)}
+                      style={{
+                        flex: '0 0 auto',
+                        position: 'relative',
+                        padding: '0.28rem 1rem',
+                        borderRadius: '0.35rem',
+                        border: isActive ? '2px solid var(--lb-orange)' : '2px solid var(--lb-ink)',
+                        fontWeight: 800,
+                        fontFamily: 'inherit',
+                        fontSize: '1rem',
+                        background: 'var(--lb-cream)',
+                        boxShadow: 'none',
+                      }}
                     >
-                      {item.image && (
-                        <div className="lb-menu-item-card__thumb" style={{ margin: '0 0 0.75rem 0' }}>
-                          <img
-                            src={publicUrl(item.image)}
-                            alt=""
-                            width={240}
-                            height={240}
-                            draggable={false}
-                            style={{
-                              display: 'block',
-                              width: '100%',
-                              height: 'auto',
-                              aspectRatio: '1',
-                              objectFit: 'cover',
-                            }}
-                          />
-                        </div>
-                      )}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
-                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, lineHeight: 1.2 }}>{item.name}</h3>
-                        {item.description.trim() ? (
-                          <p
-                            style={{
-                              margin: 0,
-                              fontSize: '0.9rem',
-                              opacity: 0.85,
-                              lineHeight: 1.4,
-                              whiteSpace: 'pre-line',
-                            }}
-                          >
-                            {item.description}
-                          </p>
-                        ) : null}
-                        {item.tags && item.tags.length > 0 && (
-                          <div
-                            style={{
-                              display: 'flex',
-                              flexWrap: 'wrap',
-                              gap: '0.35rem',
-                            }}
-                          >
-                            {item.tags.map((tag, ti) => (
-                              <span
-                                key={`${item.id}-tag-${ti}`}
-                                className="lb-menu-item-card__tag"
-                                style={{
-                                  padding: '0.2rem 0.45rem',
-                                  fontSize: '0.7rem',
-                                  fontWeight: 700,
-                                  lineHeight: 1.25,
-                                }}
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        {item.variants && item.variants.length > 0 ? (
-                          <div className="lb-menu-item-card__variants-row">
-                            {item.variants.map((v, vi) => (
-                              <div
-                                key={`${item.id}-v-${vi}`}
-                                className="lb-menu-item-card__variant-chip"
-                              >
-                                <span className="lb-menu-item-card__variant-label">
-                                  {v.size} - {v.price}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        ) : item.price.trim() ? (
-                          <p
-                            style={{
-                              margin: 0,
-                              marginTop: 'auto',
-                              fontWeight: 800,
-                              fontSize: '1.05rem',
-                            }}
-                          >
-                            {item.price}
-                          </p>
-                        ) : null}
-                      </div>
-                    </motion.div>
-                  </motion.li>
-                )
-              })}
-            </ul>
-          </motion.div>
+                      <span style={{ position: 'relative', zIndex: 1 }}>{cat.shortTitle}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {menuCategories.map((cat) => (
+              <section
+                key={`${locationId}-${cat.id}`}
+                id={menuSectionDomId(locationId, cat.id)}
+                className="lb-menu-category-section"
+                aria-labelledby={`menu-cat-heading-${locationId}-${cat.id}`}
+              >
+                <motion.div
+                  initial={reduce ? false : { opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+                >
+                  <h2
+                    id={`menu-cat-heading-${locationId}-${cat.id}`}
+                    style={{ margin: '0 0 0.35rem', fontSize: '1.5rem', fontWeight: 800 }}
+                  >
+                    {cat.title}
+                  </h2>
+                  <p style={{ margin: '0 0 1.25rem', maxWidth: '40rem' }}>{cat.blurb}</p>
+
+                  <ul
+                    className="menu-grid"
+                    style={{
+                      listStyle: 'none',
+                      margin: 0,
+                      padding: 0,
+                    }}
+                  >
+                    {cat.items.map((item, index) => (
+                      <MenuItemListItem
+                        key={`${locationId}-${cat.id}-${item.id}`}
+                        item={item}
+                        index={index}
+                        reduce={Boolean(reduce)}
+                        setLightbox={setLightbox}
+                      />
+                    ))}
+                  </ul>
+                </motion.div>
+              </section>
+            ))}
+          </div>
         )}
         </div>
       </section>
