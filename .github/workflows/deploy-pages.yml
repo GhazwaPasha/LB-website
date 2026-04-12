@@ -24,16 +24,10 @@ jobs:
         with:
           node-version: '20'
           cache: npm
+      # Custom domain (e.g. lovebites.pk) is served at /. Project-only github.io URLs use /repo/;
+      # this site uses a custom domain, so always build with base /.
       - name: Set Vite base path for GitHub Pages
-        shell: bash
-        run: |
-          REPO="${{ github.event.repository.name }}"
-          OWNER="${{ github.repository_owner }}"
-          if [[ "$REPO" == "${OWNER}.github.io" ]]; then
-            echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
-          else
-            echo "VITE_BASE_PATH=/${REPO}/" >> "$GITHUB_ENV"
-          fi
+        run: echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3

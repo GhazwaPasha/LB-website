@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-/** GitHub project pages use /repo-name/; user site username.github.io uses /. Set via CI (VITE_BASE_PATH). */
+/** Production Pages builds set VITE_BASE_PATH=/ (custom domain). Local default is /. */
 const base = process.env.VITE_BASE_PATH?.trim() || '/'
 
 export default defineConfig({
