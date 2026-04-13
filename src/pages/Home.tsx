@@ -209,7 +209,7 @@ export function Home() {
           </Reveal>
           <Reveal delay={0.2}>
             <Link to="/contact" className="lb-know-card lb-know-card--contact">
-              Contact
+              Company
               <span className="lb-know-card__sub">Company phone, email &amp; office</span>
             </Link>
           </Reveal>

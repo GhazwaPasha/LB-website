@@ -1,30 +1,42 @@
-import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Reveal } from '../components/Reveal'
 import { companyContact } from '../data/locations'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 export function Contact() {
-  usePageTitle('Contact', 'Reach Love Bites — company phone, email, and office details.')
+  usePageTitle('Company', 'Reach Love Bites — company phone, email, and office details.')
+  const reduce = useReducedMotion()
   const telHref = `tel:${companyContact.phone.replace(/\s/g, '')}`
 
   return (
     <main style={{ flex: 1, paddingBottom: '2.5rem' }}>
-      <section className="lb-container" style={{ paddingTop: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-        <Reveal>
-          <h1 style={{ margin: '0 0 0.5rem', fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: 800 }}>
-            Contact
-          </h1>
-          <p style={{ margin: '0 0 1.75rem', maxWidth: '36rem' }}>
-            Get in touch with the company directly — events, catering, partnerships, or anything that isn’t
-            about a single restaurant visit. Restaurant locations and store hours live on{' '}
-            <Link to="/spots" style={{ fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 4 }}>
-              Our Spots
-            </Link>
-            .
-          </p>
-        </Reveal>
+      <section className="lb-full-bleed lb-contact-hero">
+        <div
+          className="lb-container"
+          style={{ position: 'relative', zIndex: 1, display: 'grid', gap: '1rem' }}
+        >
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+          >
+            <h1
+              style={{
+                margin: 0,
+                fontWeight: 800,
+                fontSize: 'clamp(2.25rem, 6vw, 3.5rem)',
+                lineHeight: 1.05,
+                letterSpacing: '-0.03em',
+              }}
+            >
+              Company
+            </h1>
+          </motion.div>
+        </div>
+      </section>
 
-        <Reveal delay={0.06}>
+      <section className="lb-container" style={{ paddingTop: 'clamp(0.25rem, 1vw, 0.5rem)' }}>
+        <Reveal>
           <div
             style={{
               padding: '1.5rem',
@@ -35,9 +47,6 @@ export function Contact() {
               maxWidth: '32rem',
             }}
           >
-            <p style={{ margin: '0 0 0.35rem', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.75 }}>
-              Company
-            </p>
             <p style={{ margin: '0 0 1.25rem', fontSize: '1.35rem', fontWeight: 800 }}>{companyContact.name}</p>
 
             <dl style={{ margin: 0, display: 'grid', gap: '1rem' }}>
@@ -73,19 +82,6 @@ export function Contact() {
               </div>
             </dl>
           </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <p style={{ margin: '1.25rem 0 0', maxWidth: '36rem', fontSize: '0.95rem', opacity: 0.85 }}>
-            Replace placeholder phone, email, and address in{' '}
-            <code style={{ fontWeight: 700, background: 'var(--lb-white)', padding: '0.1rem 0.35rem', borderRadius: 8 }}>
-              src/data/locations.ts
-            </code>{' '}
-            (<code style={{ fontWeight: 700, background: 'var(--lb-white)', padding: '0.1rem 0.35rem', borderRadius: 8 }}>
-              companyContact
-            </code>
-            ).
-          </p>
         </Reveal>
       </section>
     </main>

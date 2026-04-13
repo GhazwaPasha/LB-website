@@ -7,7 +7,7 @@ const nav = [
   { to: '/menu', label: 'Menu' },
   { to: '/spots', label: 'Spots' },
   { to: '/about', label: 'Our Story' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/contact', label: 'Company' },
 ]
 
 export function Header() {
@@ -17,6 +17,7 @@ export function Header() {
   const isMenuPage = pathname === '/menu' || pathname.startsWith('/menu/')
   const isAboutPage = pathname === '/about'
   const isSpotsPage = pathname === '/spots'
+  const isContactPage = pathname === '/contact'
 
   return (
     <header
@@ -32,7 +33,9 @@ export function Header() {
             ? 'var(--lb-mustard)'
             : isSpotsPage
               ? 'var(--lb-tomato)'
-              : 'var(--lb-orange)',
+              : isContactPage
+                ? 'var(--lb-contact-hero-bg)'
+                : 'var(--lb-orange)',
         borderBottom: 'none',
         boxShadow: 'none',
       }}

@@ -11,6 +11,8 @@
   --lb-orange: #ff8a2b;
   --lb-cyan: #3dd9c4;
   --lb-mustard: #e5b143;
+  /* Contact page — header + hero title band (Spots-style rule under hero) */
+  --lb-contact-hero-bg: #c26e29;
   /* Full-width dividers (About cream band, Menu below location strip) */
   --lb-section-rule: 4px solid var(--lb-ink);
   /* Solid fill behind menu location line-art heroes (matches artwork background). */
@@ -303,6 +305,19 @@ button {
   padding-bottom: clamp(2rem, 6vw, 4rem);
   overflow: hidden;
   background: var(--lb-tomato);
+  color: var(--lb-ink);
+  border-bottom: var(--lb-section-rule);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Contact — same rhythm as Spots hero: full-bleed band + ink rule under title */
+.lb-contact-hero {
+  position: relative;
+  margin: 0;
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+  padding-bottom: clamp(2rem, 6vw, 4rem);
+  overflow: hidden;
+  background: var(--lb-contact-hero-bg);
   color: var(--lb-ink);
   border-bottom: var(--lb-section-rule);
   margin-bottom: clamp(1.25rem, 3vw, 2rem);

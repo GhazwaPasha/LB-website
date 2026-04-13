@@ -45,13 +45,13 @@ export const locations: Location[] = [
   },
 ]
 
-export const contactEmail = 'hello@lovebites.example'
+export const contactEmail = 'lovebites.pakistan@gmail.com'
 
 /** Head office / company — edit before launch */
 export const companyContact = {
   name: 'Love Bites',
   phone: '+92 47 6331462',
   email: contactEmail,
-  address: 'Sargodha Road, Chiniot, Punjab, Pakistan',
-  hours: 'Office inquiries Mon–Sat 10a–6p',
+  address: 'Love Bites Office, Sargodha Road, Chiniot, Punjab, Pakistan',
+  hours: 'Monday to Thursday, 11 a.m. to 6 p.m.',
 } as const
