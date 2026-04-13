@@ -163,6 +163,8 @@ button {
   font-weight: 800;
   letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
   text-transform: uppercase;
+  background: var(--lb-cheese);
+  color: var(--lb-ink);
   border: 3px solid var(--lb-ink);
   border-radius: 0.55rem;
   box-shadow: none;
@@ -186,7 +188,7 @@ button {
   letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
   text-transform: uppercase;
   background: var(--lb-tomato);
-  color: var(--lb-white);
+  color: var(--lb-ink);
   border: 3px solid var(--lb-ink);
   border-radius: 0.55rem;
   box-shadow: none;
@@ -195,11 +197,13 @@ button {
 
 .lb-btn--hero-secondary:hover {
   background: color-mix(in srgb, var(--lb-tomato) 78%, var(--lb-white));
+  color: var(--lb-ink);
   transform: translate(-2px, -3px);
   box-shadow: none;
 }
 
 .lb-btn--hero-secondary:active {
+  color: var(--lb-ink);
   transform: translate(2px, 2px);
   box-shadow: none;
 }
@@ -246,45 +250,46 @@ button {
 }
 
 .lb-know-card--menu {
-  background: var(--lb-cheese);
+  background: var(--lb-location-hero-matte);
   color: var(--lb-ink);
 }
 
 .lb-know-card--menu:hover,
 .lb-know-card--menu:active {
+  background: #43a047;
   color: var(--lb-ink);
 }
 
 .lb-know-card--story {
-  background: var(--lb-orange);
+  background: var(--lb-cheese);
   color: var(--lb-ink);
 }
 
 .lb-know-card--story:hover,
 .lb-know-card--story:active {
-  background: #ffa14d;
+  background: #f5c63e;
   color: var(--lb-ink);
 }
 
 .lb-know-card--spots {
-  background: var(--lb-lettuce);
-  color: var(--lb-white);
+  background: var(--lb-tomato);
+  color: var(--lb-ink);
 }
 
 .lb-know-card--spots:hover,
 .lb-know-card--spots:active {
-  background: #3d9550;
-  color: var(--lb-white);
+  background: #b92524;
+  color: var(--lb-ink);
 }
 
 .lb-know-card--contact {
-  background: var(--lb-cyan);
+  background: var(--lb-contact-hero-bg);
   color: var(--lb-ink);
 }
 
 .lb-know-card--contact:hover,
 .lb-know-card--contact:active {
-  background: #5ec4d4;
+  background: #ad6124;
   color: var(--lb-ink);
 }
 

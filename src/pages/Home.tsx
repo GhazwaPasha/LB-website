@@ -203,7 +203,7 @@ export function Home() {
           </Reveal>
           <Reveal delay={0.15}>
             <Link to="/spots" className="lb-know-card lb-know-card--spots">
-              Our spots
+              Our Spots
               <span className="lb-know-card__sub">All three restaurants — hours &amp; maps</span>
             </Link>
           </Reveal>
