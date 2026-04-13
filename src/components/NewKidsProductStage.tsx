@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useId, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useId, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { NewKidsSlide } from '../data/newKidsManifest'
 
 type Props = {
   slides: readonly NewKidsSlide[]
   reduceMotion: boolean
-  description: ReactNode
 }
 
-export function NewKidsProductStage({ slides, reduceMotion, description }: Props) {
+export function NewKidsProductStage({ slides, reduceMotion }: Props) {
   const len = slides.length
   const [index, setIndex] = useState(0)
   /** 1 = forward (next): enter from right, exit to left. -1 = backward. */
@@ -99,7 +98,6 @@ export function NewKidsProductStage({ slides, reduceMotion, description }: Props
           <h2 id={titleId} className="lb-new-kids-stage__title">
             NEW KIDS IN TOWN
           </h2>
-          <div className="lb-new-kids-stage__blurb">{description}</div>
         </div>
         <span className="sr-only">
           Long Shots Pizza — slide {index + 1} of {len}. {current.alt}

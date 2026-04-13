@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
@@ -16,6 +16,7 @@ import { ProductImageLightbox, type ProductLightboxPayload } from '../components
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
+import { IconChevronLeft, IconChevronRight } from '../components/icons/ChevronIcons'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
 
@@ -190,6 +191,45 @@ export function MenuPage() {
   const [lightbox, setLightbox] = useState<ProductLightboxPayload | null>(null)
   const reduce = useReducedMotion()
   const menuBrowseTopRef = useRef<HTMLDivElement>(null)
+  const categoryTabsRef = useRef<HTMLDivElement>(null)
+  const [tabScroll, setTabScroll] = useState({ overflow: false, canLeft: false, canRight: false })
+
+  const updateTabScrollEdges = useCallback(() => {
+    const el = categoryTabsRef.current
+    if (!el) return
+    const { scrollLeft, scrollWidth, clientWidth } = el
+    const eps = 2
+    const overflow = scrollWidth > clientWidth + eps
+    setTabScroll({
+      overflow,
+      canLeft: overflow && scrollLeft > eps,
+      canRight: overflow && scrollLeft + clientWidth < scrollWidth - eps,
+    })
+  }, [])
+
+  const scrollCategoryTabs = useCallback((direction: -1 | 1) => {
+    const el = categoryTabsRef.current
+    if (!el) return
+    const delta = Math.max(140, Math.floor(el.clientWidth * 0.72))
+    el.scrollBy({ left: direction * delta, behavior: reduce ? 'auto' : 'smooth' })
+    requestAnimationFrame(() => updateTabScrollEdges())
+  }, [reduce, updateTabScrollEdges])
+
+  useLayoutEffect(() => {
+    updateTabScrollEdges()
+  }, [locationId, menuCategories, updateTabScrollEdges])
+
+  useEffect(() => {
+    const el = categoryTabsRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => updateTabScrollEdges())
+    ro.observe(el)
+    el.addEventListener('scroll', updateTabScrollEdges, { passive: true })
+    return () => {
+      ro.disconnect()
+      el.removeEventListener('scroll', updateTabScrollEdges)
+    }
+  }, [locationId, updateTabScrollEdges])
 
   useEffect(() => {
     if (!locationId) {
@@ -273,7 +313,10 @@ export function MenuPage() {
           overflow: 'hidden',
           background: 'var(--lb-location-hero-matte)',
           color: 'var(--lb-white)',
-          paddingBlock: 'clamp(0.5rem, 2vw, 0.85rem)',
+          /* Cover hairline gap (cream body) under sticky header — same idea as .lb-contact-hero */
+          marginTop: '-2px',
+          paddingTop: 'calc(clamp(0.5rem, 2vw, 0.85rem) + 2px)',
+          paddingBottom: 'clamp(0.5rem, 2vw, 0.85rem)',
           ...(locationId
             ? {
                 display: 'flex',
@@ -419,57 +462,49 @@ export function MenuPage() {
             }}
           >
             <div className="lb-menu-category-sticky">
-              <div
-                role="tablist"
-                aria-label="Menu categories"
-                className="lb-hide-scrollbar"
-                style={{
-                  display: 'flex',
-                  gap: '0.5rem',
-                  flexWrap: 'nowrap',
-                  overflowX: 'auto',
-                  paddingBottom: '2px',
-                }}
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === MENU_CATEGORY_TAB_ALL}
-                  onClick={() => selectCategoryTab(MENU_CATEGORY_TAB_ALL)}
-                  style={{
-                    flex: '0 0 auto',
-                    position: 'relative',
-                    padding: '0.28rem 1rem',
-                    borderRadius: '0.35rem',
-                    border:
-                      activeTab === MENU_CATEGORY_TAB_ALL
-                        ? '2px solid var(--lb-orange)'
-                        : '2px solid var(--lb-ink)',
-                    fontWeight: 800,
-                    fontFamily: 'inherit',
-                    fontSize: '1rem',
-                    background: 'var(--lb-cream)',
-                    boxShadow: 'none',
-                  }}
-                >
-                  <span style={{ position: 'relative', zIndex: 1 }}>All</span>
-                </button>
-                {menuCategories.map((cat) => {
-                  const isActive = cat.id === activeTab
-                  return (
+              <div className="lb-menu-category-tabs-row">
+                {tabScroll.overflow ? (
+                  <button
+                    type="button"
+                    className="lb-menu-category-scroll-btn"
+                    aria-label="Scroll categories left"
+                    aria-controls="menu-category-tabs"
+                    disabled={!tabScroll.canLeft}
+                    onClick={() => scrollCategoryTabs(-1)}
+                  >
+                    <IconChevronLeft />
+                  </button>
+                ) : null}
+                <div className="lb-menu-category-tabs-row__scroller">
+                  <div
+                    ref={categoryTabsRef}
+                    id="menu-category-tabs"
+                    role="tablist"
+                    aria-label="Menu categories"
+                    className="lb-hide-scrollbar"
+                    style={{
+                      display: 'flex',
+                      gap: '0.5rem',
+                      flexWrap: 'nowrap',
+                      overflowX: 'auto',
+                      overflowY: 'hidden',
+                      alignItems: 'stretch',
+                    }}
+                  >
                     <button
-                      key={cat.id}
                       type="button"
                       role="tab"
-                      aria-selected={isActive}
-                      data-menu-category-tab={cat.id}
-                      onClick={() => selectCategoryTab(cat.id)}
+                      aria-selected={activeTab === MENU_CATEGORY_TAB_ALL}
+                      onClick={() => selectCategoryTab(MENU_CATEGORY_TAB_ALL)}
                       style={{
                         flex: '0 0 auto',
                         position: 'relative',
                         padding: '0.28rem 1rem',
                         borderRadius: '0.35rem',
-                        border: isActive ? '2px solid var(--lb-orange)' : '2px solid var(--lb-ink)',
+                        border:
+                          activeTab === MENU_CATEGORY_TAB_ALL
+                            ? '2px solid var(--lb-orange)'
+                            : '2px solid var(--lb-ink)',
                         fontWeight: 800,
                         fontFamily: 'inherit',
                         fontSize: '1rem',
@@ -477,10 +512,49 @@ export function MenuPage() {
                         boxShadow: 'none',
                       }}
                     >
-                      <span style={{ position: 'relative', zIndex: 1 }}>{cat.shortTitle}</span>
+                      <span style={{ position: 'relative', zIndex: 1 }}>All</span>
                     </button>
-                  )
-                })}
+                    {menuCategories.map((cat) => {
+                      const isActive = cat.id === activeTab
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          data-menu-category-tab={cat.id}
+                          onClick={() => selectCategoryTab(cat.id)}
+                          style={{
+                            flex: '0 0 auto',
+                            position: 'relative',
+                            padding: '0.28rem 1rem',
+                            borderRadius: '0.35rem',
+                            border: isActive ? '2px solid var(--lb-orange)' : '2px solid var(--lb-ink)',
+                            fontWeight: 800,
+                            fontFamily: 'inherit',
+                            fontSize: '1rem',
+                            background: 'var(--lb-cream)',
+                            boxShadow: 'none',
+                          }}
+                        >
+                          <span style={{ position: 'relative', zIndex: 1 }}>{cat.shortTitle}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+                {tabScroll.overflow ? (
+                  <button
+                    type="button"
+                    className="lb-menu-category-scroll-btn"
+                    aria-label="Scroll categories right"
+                    aria-controls="menu-category-tabs"
+                    disabled={!tabScroll.canRight}
+                    onClick={() => scrollCategoryTabs(1)}
+                  >
+                    <IconChevronRight />
+                  </button>
+                ) : null}
               </div>
             </div>
 

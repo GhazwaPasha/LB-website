@@ -101,17 +101,7 @@ export function Home() {
               border: 'none',
             }}
           >
-            <NewKidsProductStage
-              slides={newKidsProductSlides}
-              reduceMotion={!!reduce}
-              description={
-                <>
-                  Fresh faces on the lineup, say hello to <strong>Long Shots Pizza</strong>.
-                  <br />
-                  Now available in four premium flavors!
-                </>
-              }
-            />
+            <NewKidsProductStage slides={newKidsProductSlides} reduceMotion={!!reduce} />
           </section>
         </Reveal>
       ) : null}
