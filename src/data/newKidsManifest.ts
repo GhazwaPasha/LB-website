@@ -10,9 +10,6 @@ const modules = import.meta.glob('../assets/new-kids-in-town/*.png', {
 
 export type NewKidsSlide = { src: string; alt: string }
 
-/** Section backdrop per slide (cycles if there are more than four images). */
-export const newKidsBackdropHex = ['#644476', '#EAA0AC', '#58B7BE', '#F07D23'] as const
-
 function sortKey(path: string): string {
   const name = path.split('/').pop() ?? path
   return name

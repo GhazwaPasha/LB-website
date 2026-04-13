@@ -587,20 +587,65 @@ button {
   z-index: 1;
 }
 
-/* New kids — full-bleed product stage (dynamic backdrop from product art) */
+/* New kids — full-bleed: slide art fills the band; title sits over the image */
 .lb-new-kids-stage {
+  /*
+    Fixed band height — not min-height — so text never stretches the strip.
+    Otherwise the grid grew with the blurb and the image got taller (no crop).
+  */
+  --lb-new-kids-band-h: clamp(18rem, 58vw, 36rem);
   margin-top: 0;
-  padding-top: clamp(1.25rem, 4vw, 2rem);
-  padding-bottom: clamp(3rem, 8vw, 5rem);
   padding-inline: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  height: var(--lb-new-kids-band-h);
+  min-height: var(--lb-new-kids-band-h);
+  color: var(--lb-ink);
+}
+
+.lb-new-kids-stage__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template: 1fr / 1fr;
+  overflow: hidden;
+}
+
+.lb-new-kids-stage__slide {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+}
+
+.lb-new-kids-stage__bg-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 50%;
+}
+
+.lb-new-kids-stage__intro-wrap {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto 0;
+  width: 100%;
+  padding-top: clamp(0.45rem, 1.2vw, 0.7rem);
+  padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
+  pointer-events: none;
+}
+
+.lb-new-kids-stage__intro-wrap .lb-new-kids-stage__intro {
+  pointer-events: auto;
 }
 
 .lb-new-kids-stage__intro {
   position: relative;
-  z-index: 1;
   display: grid;
   gap: 0.5rem;
   padding-block: 0;
@@ -609,7 +654,7 @@ button {
 
 .lb-new-kids-stage__title {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(2rem, 4.75vw, 2.65rem);
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: 0.04em;
@@ -627,42 +672,16 @@ button {
   font-weight: 800;
 }
 
-/* Stacked grid cell so sync swipe (enter + exit) overlap without doubling height */
-.lb-new-kids-stage__frame {
-  display: grid;
-  grid-template: 1fr / 1fr;
-  place-items: center;
-  align-content: center;
-  padding-inline: 0;
-  padding-block: 0;
-  overflow: hidden;
-  position: relative;
-}
-
-.lb-new-kids-stage__slide {
-  grid-area: 1 / 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.lb-new-kids-stage__img {
-  display: block;
-  width: 100%;
-  max-width: 520px;
-  height: 240px;
-  object-fit: contain;
-  filter: drop-shadow(0 12px 28px rgb(var(--lb-shadow-key) / 0.12));
-}
-
 .lb-new-kids-stage__controls {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding-block: 0;
+  padding: clamp(0.35rem, 1.2vw, 0.55rem) clamp(1rem, 3vw, 1.5rem) clamp(0.45rem, 1.5vw, 0.7rem);
 }
 
 /* New kids carousel — dot indicators only */
@@ -674,6 +693,7 @@ button {
   padding: 0;
   background: transparent;
   cursor: pointer;
+  box-shadow: 0 0 0 1px rgb(255 251 247 / 0.85), 0 1px 3px rgb(var(--lb-shadow-key) / 0.18);
 }
 
 .lb-new-kids-carousel__dot--active {

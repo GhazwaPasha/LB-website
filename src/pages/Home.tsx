@@ -106,8 +106,9 @@ export function Home() {
               reduceMotion={!!reduce}
               description={
                 <>
-                  Fresh faces on the lineup — say hello to <strong>Long Shots Pizza</strong>. Here’s a first look;
-                  find them on the menu when your store’s stocked.
+                  Fresh faces on the lineup, say hello to <strong>Long Shots Pizza</strong>.
+                  <br />
+                  Now available in four premium flavors!
                 </>
               }
             />
