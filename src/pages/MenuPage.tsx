@@ -16,6 +16,8 @@ import { ProductImageLightbox, type ProductLightboxPayload } from '../components
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
+import { menuProductBackdropColor } from '../utils/menuProductPalette'
+import { resolveMenuItemImagePath } from '../data/menu/productPhotoByItemId'
 import { IconChevronLeft, IconChevronRight } from '../components/icons/ChevronIcons'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
@@ -35,8 +37,11 @@ type MenuItemListItemProps = {
 }
 
 function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItemProps) {
+  const imagePath = resolveMenuItemImagePath(item)
+  const thumbBg = menuProductBackdropColor(item.id)
+
   const openLightboxForItem = () => {
-    if (!item.image) return
+    if (!imagePath) return
     const variantLines =
       item.variants && item.variants.length > 0
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
@@ -51,7 +56,7 @@ function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItem
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
         : '')
     setLightbox({
-      src: publicUrl(item.image),
+      src: publicUrl(imagePath),
       alt: `${item.name} — Love Bites`,
       title: item.name,
       price: lightboxPrice,
@@ -73,15 +78,15 @@ function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItem
     >
       <motion.div
         className="lb-menu-item-card"
-        role={item.image ? 'button' : undefined}
-        tabIndex={item.image ? 0 : undefined}
-        aria-label={item.image ? `Open enlarged photo of ${item.name}` : undefined}
-        aria-haspopup={item.image ? 'dialog' : undefined}
+        role={imagePath ? 'button' : undefined}
+        tabIndex={imagePath ? 0 : undefined}
+        aria-label={imagePath ? `Open enlarged photo of ${item.name}` : undefined}
+        aria-haspopup={imagePath ? 'dialog' : undefined}
         whileHover={reduce ? undefined : { y: -4, transition: { type: 'spring', stiffness: 420, damping: 26 } }}
         whileTap={reduce ? undefined : { y: 1, transition: { type: 'spring', stiffness: 500, damping: 28 } }}
-        onClick={item.image ? openLightboxForItem : undefined}
+        onClick={imagePath ? openLightboxForItem : undefined}
         onKeyDown={
-          item.image
+          imagePath
             ? (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
@@ -91,25 +96,19 @@ function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItem
             : undefined
         }
       >
-        {item.image && (
-          <div className="lb-menu-item-card__thumb" style={{ margin: '0 0 0.75rem 0' }}>
+        {imagePath && (
+          <div className="lb-menu-item-card__thumb" style={{ backgroundColor: thumbBg }}>
             <img
-              src={publicUrl(item.image)}
+              src={publicUrl(imagePath)}
               alt=""
               width={240}
               height={240}
               draggable={false}
-              style={{
-                display: 'block',
-                width: '100%',
-                height: 'auto',
-                aspectRatio: '1',
-                objectFit: 'cover',
-              }}
+              className="lb-menu-item-card__thumb-img"
             />
           </div>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+        <div className="lb-menu-item-card__body">
           <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, lineHeight: 1.2 }}>{item.name}</h3>
           {item.description.trim() ? (
             <p
