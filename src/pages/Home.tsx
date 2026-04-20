@@ -35,6 +35,8 @@ export function Home() {
             src={publicUrl('/brand/art-heart-burger-line.png')}
             alt=""
             aria-hidden
+            fetchPriority="low"
+            decoding="async"
             style={{
               position: 'absolute',
               width: 'min(400px, 75vw)',
@@ -133,6 +135,7 @@ export function Home() {
                 src={publicUrl('/brand/poster-love-bites.png')}
                 alt="Love Bites illustrated poster with pizza and friends"
                 loading="lazy"
+                decoding="async"
                 style={{
                   width: '100%',
                   maxWidth: '520px',

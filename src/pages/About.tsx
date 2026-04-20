@@ -82,6 +82,7 @@ export function About() {
               src={publicUrl('/brand/art-heart-burger-line.png')}
               alt="Love Bites heart-shaped burger line illustration"
               loading="lazy"
+              decoding="async"
               style={{
                 width: '100%',
                 maxWidth: '320px',

@@ -209,6 +209,8 @@ export function ProductImageLightbox({ payload, onClose }: Props) {
                   alt={payload.alt}
                   width={800}
                   height={800}
+                  fetchPriority="high"
+                  decoding="async"
                   draggable={false}
                   style={{
                     display: 'block',

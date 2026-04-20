@@ -103,6 +103,8 @@ function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItem
               alt=""
               width={240}
               height={240}
+              loading="lazy"
+              decoding="async"
               draggable={false}
               className="lb-menu-item-card__thumb-img"
             />
@@ -333,6 +335,8 @@ export function MenuPage() {
                 src={publicUrl(menuLocationHeroImage[locationId])}
                 alt=""
                 aria-hidden
+                fetchPriority="high"
+                decoding="async"
                 initial={
                   reduce
                     ? false

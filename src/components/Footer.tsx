@@ -25,6 +25,7 @@ export function Footer() {
           <img
             src={publicUrl('/brand/logo-white.png')}
             alt="Love Bites"
+            loading="lazy"
             decoding="async"
             style={{
               width: 'min(11.5rem, 72vw)',
