@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ImageWithSkeleton } from './ImageWithSkeleton'
 import { publicUrl } from '../utils/publicUrl'
 
 export function Footer() {
@@ -22,17 +23,17 @@ export function Footer() {
             lineHeight: 0,
           }}
         >
-          <img
+          <ImageWithSkeleton
             src={publicUrl('/brand/logo-white.png')}
             alt="Love Bites"
             loading="lazy"
             decoding="async"
+            shimmer="inverse"
             style={{
               width: 'min(11.5rem, 72vw)',
               height: 'clamp(1.4rem, 3.2vw, 1.85rem)',
               objectFit: 'contain',
               objectPosition: 'left center',
-              display: 'block',
             }}
           />
         </Link>

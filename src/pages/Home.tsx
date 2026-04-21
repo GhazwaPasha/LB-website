@@ -1,7 +1,9 @@
 import type { CSSProperties } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import chevyDoodleUrl from '../../chevy.png'
+import { ImageWithSkeleton } from '../components/ImageWithSkeleton'
 import { NewKidsProductStage } from '../components/NewKidsProductStage'
 import { Reveal } from '../components/Reveal'
 import { newKidsProductSlides } from '../data/newKidsManifest'
@@ -15,6 +17,19 @@ export function Home() {
   )
   const reduce = useReducedMotion()
   const location = useLocation()
+
+  useEffect(() => {
+    if (newKidsProductSlides.length === 0) return
+    const href = newKidsProductSlides[0].src
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = href
+    document.head.appendChild(link)
+    return () => {
+      document.head.removeChild(link)
+    }
+  }, [])
 
   return (
     <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0 }} key={location.key}>
@@ -131,21 +146,29 @@ export function Home() {
               </p>
             </div>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <motion.img
-                src={publicUrl('/brand/poster-love-bites.png')}
-                alt="Love Bites illustrated poster with pizza and friends"
-                loading="lazy"
-                decoding="async"
+              <motion.div
+                whileHover={reduce ? undefined : { rotate: -1.5, scale: 1.01 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 style={{
                   width: '100%',
                   maxWidth: '520px',
                   borderRadius: 'var(--lb-radius-lg)',
-                  border: 'none',
+                  overflow: 'hidden',
                   boxShadow: 'var(--lb-shadow)',
                 }}
-                whileHover={reduce ? undefined : { rotate: -1.5, scale: 1.01 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              />
+              >
+                <ImageWithSkeleton
+                  src={publicUrl('/brand/poster-love-bites.png')}
+                  alt="Love Bites illustrated poster with pizza and friends"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 640px) 100vw, 520px"
+                  style={{
+                    width: '100%',
+                    borderRadius: 'var(--lb-radius-lg)',
+                  }}
+                />
+              </motion.div>
             </div>
           </div>
         </section>

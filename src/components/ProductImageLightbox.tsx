@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ImageWithSkeleton } from './ImageWithSkeleton'
 
 export type ProductLightboxPayload = {
   src: string
@@ -204,22 +205,28 @@ export function ProductImageLightbox({ payload, onClose }: Props) {
                   userSelect: 'none',
                 }}
               >
-                <img
-                  src={payload.src}
-                  alt={payload.alt}
-                  width={800}
-                  height={800}
-                  fetchPriority="high"
-                  decoding="async"
-                  draggable={false}
+                <div
                   style={{
-                    display: 'block',
+                    position: 'relative',
                     width: '100%',
-                    height: 'auto',
+                    aspectRatio: '1 / 1',
                     maxHeight: 'min(85vh, 900px)',
-                    objectFit: 'contain',
                   }}
-                />
+                >
+                  <ImageWithSkeleton
+                    fit="fill"
+                    src={payload.src}
+                    alt={payload.alt}
+                    width={800}
+                    height={800}
+                    fetchPriority="high"
+                    decoding="async"
+                    draggable={false}
+                    style={{
+                      objectFit: 'contain',
+                    }}
+                  />
+                </div>
               </div>
             </motion.div>
           </div>

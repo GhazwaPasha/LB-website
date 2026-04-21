@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { ImageWithSkeleton } from '../components/ImageWithSkeleton'
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
@@ -78,23 +79,31 @@ export function About() {
             </div>
           </Reveal>
           <Reveal delay={0.06}>
-            <motion.img
-              src={publicUrl('/brand/art-heart-burger-line.png')}
-              alt="Love Bites heart-shaped burger line illustration"
-              loading="lazy"
-              decoding="async"
+            <motion.div
+              whileHover={reduce ? undefined : { scale: 1.02, rotate: -1 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
               style={{
                 width: '100%',
                 maxWidth: '320px',
                 marginInline: 'auto',
                 borderRadius: 'var(--lb-radius-lg)',
-                border: 'none',
+                overflow: 'hidden',
                 boxShadow: 'var(--lb-shadow)',
                 background: 'var(--lb-white)',
               }}
-              whileHover={reduce ? undefined : { scale: 1.02, rotate: -1 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-            />
+            >
+              <ImageWithSkeleton
+                src={publicUrl('/brand/art-heart-burger-line.png')}
+                alt="Love Bites heart-shaped burger line illustration"
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 640px) 100vw, 320px"
+                style={{
+                  width: '100%',
+                  borderRadius: 'var(--lb-radius-lg)',
+                }}
+              />
+            </motion.div>
           </Reveal>
         </div>
       </section>

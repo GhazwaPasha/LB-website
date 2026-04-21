@@ -12,6 +12,7 @@ import {
   type MenuLocationId,
   isMenuLocationId,
 } from '../data/menu'
+import { ImageWithSkeleton } from '../components/ImageWithSkeleton'
 import { ProductImageLightbox, type ProductLightboxPayload } from '../components/ProductImageLightbox'
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -25,6 +26,9 @@ const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
 /** Sentinel tab id — not used in menu JSON category ids */
 const MENU_CATEGORY_TAB_ALL = '__all__'
 
+/** Full-bleed browse section (below location strip) when no location is chosen yet */
+const MENU_IDLE_BROWSE_BG = '/menu/menu-background.png'
+
 function menuSectionDomId(locationId: MenuLocationId, categoryId: string) {
   return `menu-section-${locationId}-${categoryId}`
 }
@@ -32,11 +36,13 @@ function menuSectionDomId(locationId: MenuLocationId, categoryId: string) {
 type MenuItemListItemProps = {
   item: MenuItem
   index: number
+  /** Index across the whole menu (used for fetch priority / eager decode). */
+  flatItemIndex: number
   reduce: boolean
   setLightbox: (payload: ProductLightboxPayload | null) => void
 }
 
-function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItemProps) {
+function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: MenuItemListItemProps) {
   const imagePath = resolveMenuItemImagePath(item)
   const thumbBg = menuProductBackdropColor(item.id)
 
@@ -98,12 +104,14 @@ function MenuItemListItem({ item, index, reduce, setLightbox }: MenuItemListItem
       >
         {imagePath && (
           <div className="lb-menu-item-card__thumb" style={{ backgroundColor: thumbBg }}>
-            <img
+            <ImageWithSkeleton
               src={publicUrl(imagePath)}
               alt=""
               width={240}
               height={240}
-              loading="lazy"
+              sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
+              loading={flatItemIndex < 8 ? 'eager' : 'lazy'}
+              fetchPriority={flatItemIndex < 8 ? 'high' : 'low'}
               decoding="async"
               draggable={false}
               className="lb-menu-item-card__thumb-img"
@@ -302,6 +310,20 @@ export function MenuPage() {
       : 'Choose your Love Bites location to see the menu.',
   )
 
+  useEffect(() => {
+    const href = locationId
+      ? publicUrl(menuLocationHeroImage[locationId])
+      : publicUrl(MENU_IDLE_BROWSE_BG)
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = href
+    document.head.appendChild(link)
+    return () => {
+      document.head.removeChild(link)
+    }
+  }, [locationId])
+
   if (invalidSlug) {
     return <Navigate to="/menu" replace />
   }
@@ -330,13 +352,8 @@ export function MenuPage() {
         {locationId ? (
           <>
             <AnimatePresence initial={false} mode="wait">
-              <motion.img
+              <motion.div
                 key={locationId}
-                src={publicUrl(menuLocationHeroImage[locationId])}
-                alt=""
-                aria-hidden
-                fetchPriority="high"
-                decoding="async"
                 initial={
                   reduce
                     ? false
@@ -373,11 +390,25 @@ export function MenuPage() {
                   inset: 0,
                   width: '100%',
                   height: '100%',
-                  objectFit: 'contain',
-                  objectPosition: 'right center',
                   transformOrigin: '100% 50%',
                 }}
-              />
+              >
+                <ImageWithSkeleton
+                  fit="fill"
+                  src={publicUrl(menuLocationHeroImage[locationId])}
+                  alt=""
+                  aria-hidden
+                  fetchPriority="high"
+                  decoding="async"
+                  draggable={false}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: 'right center',
+                  }}
+                />
+              </motion.div>
             </AnimatePresence>
             <div
               aria-hidden
@@ -435,8 +466,51 @@ export function MenuPage() {
         </div>
       </section>
 
-      <section className="lb-full-bleed" style={{ borderTop: 'var(--lb-section-rule)' }}>
-        <div className="lb-container" style={{ paddingTop: 'clamp(1.25rem, 4vw, 2rem)' }}>
+      <section
+        className="lb-full-bleed"
+        style={{
+          borderTop: 'var(--lb-section-rule)',
+          ...(!locationId
+            ? {
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: 'var(--lb-cream)',
+                minHeight: 'clamp(28rem, 62vh, 52rem)',
+                paddingBottom: 'clamp(2.5rem, 8vw, 5rem)',
+              }
+            : {}),
+        }}
+      >
+        {!locationId ? (
+          <motion.div
+            aria-hidden
+            initial={reduce ? false : { x: '14%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={
+              reduce
+                ? { duration: 0 }
+                : { type: 'spring', stiffness: 220, damping: 36, mass: 0.85 }
+            }
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 0,
+              pointerEvents: 'none',
+              backgroundImage: `linear-gradient(rgb(255 255 255 / 0.48), rgb(255 255 255 / 0.48)), url(${publicUrl(MENU_IDLE_BROWSE_BG)})`,
+              backgroundSize: 'cover, 60% auto',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat, no-repeat',
+            }}
+          />
+        ) : null}
+        <div
+          className="lb-container"
+          style={{
+            paddingTop: 'clamp(1.25rem, 4vw, 2rem)',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
         <Reveal>
           <h1 style={{ margin: '0 0 1rem', fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: 800 }}>MENU</h1>
         </Reveal>
@@ -561,47 +635,53 @@ export function MenuPage() {
               </div>
             </div>
 
-            {menuCategories.map((cat) => (
-              <section
-                key={`${locationId}-${cat.id}`}
-                id={menuSectionDomId(locationId, cat.id)}
-                className="lb-menu-category-section"
-                aria-labelledby={`menu-cat-heading-${locationId}-${cat.id}`}
-              >
-                <motion.div
-                  initial={reduce ? false : { opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+            {menuCategories.map((cat, catIndex) => {
+              const flatBase = menuCategories
+                .slice(0, catIndex)
+                .reduce((sum, section) => sum + section.items.length, 0)
+              return (
+                <section
+                  key={`${locationId}-${cat.id}`}
+                  id={menuSectionDomId(locationId, cat.id)}
+                  className="lb-menu-category-section"
+                  aria-labelledby={`menu-cat-heading-${locationId}-${cat.id}`}
                 >
-                  <h2
-                    id={`menu-cat-heading-${locationId}-${cat.id}`}
-                    style={{ margin: '0 0 0.35rem', fontSize: '1.5rem', fontWeight: 800 }}
+                  <motion.div
+                    initial={reduce ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 34 }}
                   >
-                    {cat.title}
-                  </h2>
-                  <p style={{ margin: '0 0 1.25rem', maxWidth: '40rem' }}>{cat.blurb}</p>
+                    <h2
+                      id={`menu-cat-heading-${locationId}-${cat.id}`}
+                      style={{ margin: '0 0 0.35rem', fontSize: '1.5rem', fontWeight: 800 }}
+                    >
+                      {cat.title}
+                    </h2>
+                    <p style={{ margin: '0 0 1.25rem', maxWidth: '40rem' }}>{cat.blurb}</p>
 
-                  <ul
-                    className="menu-grid"
-                    style={{
-                      listStyle: 'none',
-                      margin: 0,
-                      padding: 0,
-                    }}
-                  >
-                    {cat.items.map((item, index) => (
-                      <MenuItemListItem
-                        key={`${locationId}-${cat.id}-${item.id}`}
-                        item={item}
-                        index={index}
-                        reduce={Boolean(reduce)}
-                        setLightbox={setLightbox}
-                      />
-                    ))}
-                  </ul>
-                </motion.div>
-              </section>
-            ))}
+                    <ul
+                      className="menu-grid"
+                      style={{
+                        listStyle: 'none',
+                        margin: 0,
+                        padding: 0,
+                      }}
+                    >
+                      {cat.items.map((item, index) => (
+                        <MenuItemListItem
+                          key={`${locationId}-${cat.id}-${item.id}`}
+                          item={item}
+                          index={index}
+                          flatItemIndex={flatBase + index}
+                          reduce={Boolean(reduce)}
+                          setLightbox={setLightbox}
+                        />
+                      ))}
+                    </ul>
+                  </motion.div>
+                </section>
+              )
+            })}
           </div>
         )}
         </div>

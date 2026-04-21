@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { NewKidsSlide } from '../data/newKidsManifest'
+import { ImageWithSkeleton } from './ImageWithSkeleton'
 
 type Props = {
   slides: readonly NewKidsSlide[]
@@ -81,10 +82,12 @@ export function NewKidsProductStage({ slides, reduceMotion }: Props) {
             exit="exit"
             transition={slideTransition}
           >
-            <img
+            <ImageWithSkeleton
+              fit="fill"
               src={current.src}
               alt=""
               loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'low'}
               decoding="async"
               draggable={false}
               className="lb-new-kids-stage__bg-img"
