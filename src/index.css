@@ -274,22 +274,22 @@ button {
   letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
   text-transform: uppercase;
   background: var(--lb-tomato);
-  color: var(--lb-ink);
+  color: var(--lb-white);
   border: 3px solid var(--lb-ink);
   border-radius: 0.55rem;
   box-shadow: none;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .lb-btn--hero-secondary:hover {
   background: color-mix(in srgb, var(--lb-tomato) 78%, var(--lb-white));
-  color: var(--lb-ink);
+  color: var(--lb-white);
   transform: translate(-2px, -3px);
   box-shadow: none;
 }
 
 .lb-btn--hero-secondary:active {
-  color: var(--lb-ink);
+  color: var(--lb-white);
   transform: translate(2px, 2px);
   box-shadow: none;
 }
@@ -359,13 +359,13 @@ button {
 
 .lb-know-card--spots {
   background: var(--lb-tomato);
-  color: var(--lb-ink);
+  color: var(--lb-white);
 }
 
 .lb-know-card--spots:hover,
 .lb-know-card--spots:active {
   background: #b92524;
-  color: var(--lb-ink);
+  color: var(--lb-white);
 }
 
 .lb-know-card--contact {
@@ -385,6 +385,21 @@ button {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
+}
+
+/* About — hero title: mobile-only line break before “good food” */
+.lb-about-hero__title .lb-about-hero__title-line {
+  display: block;
+}
+
+.lb-about-hero__title .lb-about-hero__title-line > .lb-about-hero__lead-chunk {
+  display: inline;
+}
+
+@media (max-width: 639px) {
+  .lb-about-hero__title .lb-about-hero__title-line > .lb-about-hero__lead-chunk {
+    display: block;
+  }
 }
 
 /* Spots — poster-style location cards (thick ink border, brand stripe, flat) */
@@ -423,40 +438,150 @@ button {
   padding-bottom: 0.5rem;
 }
 
+/* Connect — three location cards in one row on wide screens */
+@media (min-width: 1024px) {
+  .lb-spots-list.lb-spots-list--connect {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
 .lb-spot-card {
-  --lb-spot-accent: var(--lb-cheese);
   position: relative;
   margin: 0;
   padding: 1.35rem 1.35rem 1.4rem 1.5rem;
   border-radius: 0.55rem;
   border: 3px solid var(--lb-ink);
-  background: linear-gradient(
-    90deg,
-    var(--lb-spot-accent) 0,
-    var(--lb-spot-accent) 10px,
-    var(--lb-white) 10px
-  );
+  background: var(--lb-white);
   box-shadow: none;
 }
 
-.lb-spot-card--chiniot {
-  --lb-spot-accent: var(--lb-cheese);
-}
-
-.lb-spot-card--sargodha {
-  --lb-spot-accent: var(--lb-orange);
-}
-
-.lb-spot-card--faisalabad {
-  --lb-spot-accent: var(--lb-cyan);
-}
-
 .lb-spot-card__title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.35rem;
   font-size: clamp(1.2rem, 3.5vw, 1.45rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.02em;
+}
+
+.lb-spot-card__open-tag {
+  margin: 0 0 0.55rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+  padding: 0.32rem 0.6rem;
+  font-weight: 800;
+  border: 2px solid var(--lb-ink);
+  border-radius: 0.35rem;
+  background: var(--lb-cream);
+  color: var(--lb-ink);
+}
+
+.lb-spot-card__open-tag-label {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lb-spot-card__open-tag-face {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  min-height: 1.48rem;
+  flex-shrink: 0;
+}
+
+.lb-spot-card__open-tag-eyes {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  margin-bottom: 0.1rem;
+}
+
+.lb-spot-card__open-tag-eye {
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.lb-spot-card__open-tag-mouth {
+  display: block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Smile (open) */
+.lb-spot-card__open-tag-mouth--smile {
+  width: 1rem;
+  height: 0.46rem;
+  border: 2px solid currentColor;
+  border-top: none;
+  border-radius: 0 0 999px 999px;
+  margin-top: 0;
+}
+
+/* Frown (closed) */
+.lb-spot-card__open-tag-mouth--sad {
+  width: 1rem;
+  height: 0.46rem;
+  border: 2px solid currentColor;
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+  margin-top: 0.08rem;
+}
+
+/* Neutral (closed animation) */
+.lb-spot-card__open-tag-mouth--straight {
+  width: 0.9rem;
+  height: 2px;
+  margin-top: 0.2rem;
+  border: none;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.lb-spot-card__open-tag--open {
+  color: var(--lb-lettuce);
+}
+
+.lb-spot-card__open-tag--closed {
+  color: var(--lb-tomato);
+}
+
+.lb-spot-card__phone {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1rem, 2.8vw, 1.12rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* About — values list inside a spot-style card */
+.lb-story-values {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.lb-story-values li {
+  margin-bottom: 0.35rem;
+}
+
+.lb-story-values li:last-child {
+  margin-bottom: 0;
 }
 
 .lb-spot-card__address {
@@ -480,11 +605,73 @@ button {
   border-radius: 0.35rem;
 }
 
-.lb-spot-card__actions {
-  display: flex;
-  flex-wrap: wrap;
+/* Connect — 2×2 grid: hours + Location, Call + WhatsApp; equal tiles */
+.lb-spot-card__connect {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
+  width: 100%;
+  max-width: min(100%, 22rem);
+  align-items: stretch;
+}
+
+.lb-spot-card__connect-tile {
+  display: inline-flex;
+  width: 100%;
+  min-height: 3.1rem;
+  justify-content: center;
   align-items: center;
+  align-self: stretch;
+  gap: 0.4rem;
+  padding: 0.45rem 0.5rem;
+  font-family: var(--lb-font-spot-actions);
+  font-size: clamp(0.75rem, 2.1vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-align: center;
+  border: 3px solid var(--lb-ink);
+  border-radius: 0.5rem;
+  box-shadow: none;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+.lb-spot-card__connect-tile--hours.lb-spot-card__connect-tile {
+  min-height: 3.1rem;
+}
+
+.lb-spot-card__hours-range {
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+.lb-spot-card__connect a.lb-spot-card__connect-tile {
+  text-decoration: none;
+  font-family: var(--lb-font-spot-actions);
+  font-size: clamp(0.75rem, 2.1vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.lb-btn--spot-hours.lb-spot-card__connect-tile {
+  background: var(--lb-cream);
+  color: var(--lb-ink);
+  cursor: default;
+  pointer-events: none;
+  font-family: var(--lb-font-spot-actions);
+  font-size: clamp(0.75rem, 2.1vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.lb-spot-card__connect .lb-btn--spot-hours:hover,
+.lb-spot-card__connect .lb-btn--spot-hours:active {
+  transform: none;
+  filter: none;
 }
 
 .lb-spot-btn__icon {
@@ -495,23 +682,12 @@ button {
   line-height: 0;
 }
 
-.lb-spot-card__actions .lb-btn {
-  min-height: 2.35rem;
-  gap: 0.45rem;
-  font-family: var(--lb-font-spot-actions);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  border: 3px solid var(--lb-ink);
-  border-radius: 0.5rem;
-  box-shadow: none;
-}
-
-.lb-spot-card__actions .lb-btn:hover {
+.lb-spot-card__connect .lb-spot-card__connect-tile:not(.lb-btn--spot-hours):hover {
   transform: translate(-2px, -2px);
   box-shadow: none;
 }
 
-.lb-spot-card__actions .lb-btn:active {
+.lb-spot-card__connect .lb-spot-card__connect-tile:not(.lb-btn--spot-hours):active {
   transform: translate(1px, 1px);
 }
 
@@ -543,8 +719,8 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lb-spot-card__actions .lb-btn:hover,
-  .lb-spot-card__actions .lb-btn:active {
+  .lb-spot-card__connect .lb-spot-card__connect-tile:hover,
+  .lb-spot-card__connect .lb-spot-card__connect-tile:active {
     transform: none;
   }
 }
@@ -705,13 +881,23 @@ button {
   margin-right: -50vw;
 }
 
-/* More you should know — red section, chevy doodle (--lb-chevy-doodle from repo-root chevy.png via Home.tsx) */
+/* Home link-cards band — yellow fill, chevy doodle (--lb-chevy-doodle from repo-root chevy.png via Home.tsx) */
 .lb-more-you-know {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background-color: var(--lb-tomato);
+  background-color: var(--lb-cheese);
   color: var(--lb-ink);
+}
+
+/* Our Story tile — match About header / hero (--lb-mustard) */
+.lb-more-you-know .lb-know-card--story {
+  background: var(--lb-mustard);
+}
+
+.lb-more-you-know .lb-know-card--story:hover,
+.lb-more-you-know .lb-know-card--story:active {
+  background: color-mix(in srgb, var(--lb-mustard) 88%, var(--lb-white));
 }
 
 .lb-more-you-know::before {
@@ -726,7 +912,7 @@ button {
   /* Zoom past cover so left/right of the art are trimmed a bit */
   transform: scale(1.14);
   transform-origin: center center;
-  opacity: 0.32;
+  opacity: 0.26;
   pointer-events: none;
 }
 

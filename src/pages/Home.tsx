@@ -3,9 +3,10 @@ import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import chevyDoodleUrl from '../../chevy.png'
-import { ImageWithSkeleton } from '../components/ImageWithSkeleton'
 import { NewKidsProductStage } from '../components/NewKidsProductStage'
+import { PosterStackCarousel } from '../components/PosterStackCarousel'
 import { Reveal } from '../components/Reveal'
+import { homePosterSlides } from '../data/homePosters'
 import { newKidsProductSlides } from '../data/newKidsManifest'
 import { SITE_NAME, usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
@@ -101,7 +102,7 @@ export function Home() {
               Peep the menu
             </Link>
             <Link to="/spots" className="lb-btn lb-btn--hero-secondary">
-              Find a spot
+              Reach Out
             </Link>
           </motion.div>
         </div>
@@ -133,42 +134,25 @@ export function Home() {
             border: 'none',
             paddingTop: 'clamp(1.25rem, 4vw, 2rem)',
             paddingBottom: 'clamp(3rem, 8vw, 5rem)',
+            overflowX: 'clip',
           }}
         >
           <div className="lb-container" style={{ position: 'relative', zIndex: 1, display: 'grid', gap: '1rem' }}>
-            <div style={{ display: 'grid', gap: '0.5rem' }}>
-              <h2 style={{ margin: 0, fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800 }}>
-                Poster energy, real food
-              </h2>
-              <p style={{ margin: 0, fontWeight: 500 }}>
-                Same vibe as our drops: bold color, chunky type, and line-art chaos. Pull up with friends —
-                we saved you a slice.
-              </p>
-            </div>
+            <h2
+              style={{
+                margin: 0,
+                fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
+                fontWeight: 800,
+                letterSpacing: 'clamp(0.015em, 0.28vw, 0.035em)',
+                textTransform: 'uppercase',
+              }}
+            >
+              Poster energy
+              <br />
+              But real food
+            </h2>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <motion.div
-                whileHover={reduce ? undefined : { rotate: -1.5, scale: 1.01 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                style={{
-                  width: '100%',
-                  maxWidth: '520px',
-                  borderRadius: 'var(--lb-radius-lg)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--lb-shadow)',
-                }}
-              >
-                <ImageWithSkeleton
-                  src={publicUrl('/brand/poster-love-bites.png')}
-                  alt="Love Bites illustrated poster with pizza and friends"
-                  loading="lazy"
-                  decoding="async"
-                  sizes="(max-width: 640px) 100vw, 520px"
-                  style={{
-                    width: '100%',
-                    borderRadius: 'var(--lb-radius-lg)',
-                  }}
-                />
-              </motion.div>
+              <PosterStackCarousel slides={homePosterSlides} reduceMotion={!!reduce} />
             </div>
           </div>
         </section>
@@ -178,27 +162,14 @@ export function Home() {
         className="lb-full-bleed lb-more-you-know"
         style={
           {
-            paddingTop: 'clamp(1.25rem, 4vw, 2rem)',
-            paddingBottom: 'clamp(3rem, 8vw, 5rem)',
+            paddingTop: 'clamp(1.35rem, 3.6vw, 1.85rem)',
+            paddingBottom: 'clamp(2.25rem, 5.5vw, 3.75rem)',
             ['--lb-chevy-doodle' as string]: `url(${chevyDoodleUrl})`,
           } as CSSProperties
         }
       >
-        <div className="lb-container lb-more-you-know__inner">
-        <Reveal>
-          <h2
-            style={{
-              margin: '0 0 1rem',
-              fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
-              fontWeight: 800,
-              textTransform: 'uppercase',
-              letterSpacing: '0.04em',
-            }}
-          >
-            More you should know
-          </h2>
-        </Reveal>
         <div
+          className="lb-container lb-more-you-know__inner"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
@@ -208,19 +179,19 @@ export function Home() {
           <Reveal delay={0.05}>
             <Link to="/menu" className="lb-know-card lb-know-card--menu">
               Menu
-              <span className="lb-know-card__sub">Burgers, pizza, sides, sips</span>
+              <span className="lb-know-card__sub">Pizza is our Speciality</span>
             </Link>
           </Reveal>
           <Reveal delay={0.1}>
-            <Link to="/about" className="lb-know-card lb-know-card--story">
-              Our Story
-              <span className="lb-know-card__sub">How Love Bites got loud</span>
+            <Link to="/spots" className="lb-know-card lb-know-card--spots">
+              Connect
+              <span className="lb-know-card__sub">All three restaurants - Info</span>
             </Link>
           </Reveal>
           <Reveal delay={0.15}>
-            <Link to="/spots" className="lb-know-card lb-know-card--spots">
-              Our Spots
-              <span className="lb-know-card__sub">All three restaurants — hours &amp; maps</span>
+            <Link to="/about" className="lb-know-card lb-know-card--story">
+              Our Story
+              <span className="lb-know-card__sub">Get to know us better</span>
             </Link>
           </Reveal>
           <Reveal delay={0.2}>
@@ -229,7 +200,6 @@ export function Home() {
               <span className="lb-know-card__sub">Company phone, email &amp; office</span>
             </Link>
           </Reveal>
-        </div>
         </div>
       </section>
     </main>

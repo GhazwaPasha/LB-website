@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 const nav = [
   { to: '/', label: 'Home', end: true },
   { to: '/menu', label: 'Menu' },
-  { to: '/spots', label: 'Spots' },
+  { to: '/spots', label: 'Connect' },
   { to: '/about', label: 'Our Story' },
   { to: '/contact', label: 'Company' },
 ]

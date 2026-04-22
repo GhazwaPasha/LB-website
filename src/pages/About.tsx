@@ -5,14 +5,33 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
 
 const milestones = [
-  { year: '2019', title: 'First bite', body: 'Pop-up nights, loud music, louder flavors.' },
-  { year: '2021', title: 'Chain mode', body: 'Second location opens — lines out the door.' },
-  { year: '2024', title: 'Crown crust era', body: 'Pizza drops go full poster aesthetic.' },
-  { year: 'Today', title: 'Still hungry', body: 'More cities, same heart-shaped chaos.' },
+  {
+    year: '2018',
+    title: 'A small food place in Chiniot',
+    body: 'Love Bites began here — simple counter service, big flavors, and guests who kept coming back.',
+  },
+  {
+    year: '2021',
+    title: 'A full-fledged restaurant',
+    body: 'We outgrew the original setup and upgraded our premises into a proper Love Bites restaurant with room for the whole crew.',
+  },
+  {
+    year: '2022',
+    title: 'Sargodha — second location',
+    body: 'We crossed city lines and opened our second spot on Railway Road, bringing the same menu and energy to Sargodha.',
+  },
+  {
+    year: '2026',
+    title: 'Faisalabad flagship',
+    body: 'Our newest home on Canal Road is our flagship — the biggest expression of Love Bites so far.',
+  },
 ]
 
 export function About() {
-  usePageTitle('Our Story', 'The Love Bites story — how we grew from pop-ups to a bold burger and pizza chain.')
+  usePageTitle(
+    'Our Story',
+    'Love Bites — from a small Chiniot food place in 2018 to our flagship in Faisalabad, with restaurants in Sargodha too.',
+  )
   const reduce = useReducedMotion()
 
   return (
@@ -38,16 +57,21 @@ export function About() {
             transition={{ type: 'spring', stiffness: 380, damping: 32 }}
           >
             <h1
+              className="lb-about-hero__title"
               style={{
                 margin: 0,
-                maxWidth: '18ch',
+                maxWidth: 'min(100%, 38rem)',
                 fontWeight: 800,
                 fontSize: 'clamp(2.25rem, 6vw, 3.5rem)',
-                lineHeight: 1.05,
+                lineHeight: 1.08,
                 letterSpacing: '-0.03em',
               }}
             >
-              We put love in the messy bits.
+              <span className="lb-about-hero__title-line">
+                <span className="lb-about-hero__lead-chunk">You don't find </span>
+                <span className="lb-about-hero__lead-chunk">good food,</span>
+              </span>
+              <span className="lb-about-hero__title-line">it finds you...</span>
             </h1>
           </motion.div>
         </div>
@@ -70,11 +94,18 @@ export function About() {
           }}
         >
           <Reveal>
-            <div>
-              <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.65rem', fontWeight: 800 }}>Icon energy</h2>
-              <p style={{ margin: 0, maxWidth: '36rem', fontWeight: 600 }}>
-                The heart-burger line mark is our north star — bold outlines, zero fluff, maximum crave. Same vibe as
-                the posters you have in <code style={{ fontWeight: 700 }}>Artwork</code>.
+            <div style={{ maxWidth: '40rem' }}>
+              <h2 style={{ margin: '0 0 0.75rem', fontSize: '1.65rem', fontWeight: 800 }}>Love Bites isn’t a brand</h2>
+              <p style={{ margin: '0 0 1rem', fontWeight: 600 }}>
+                Usually, it’s the other way around: brands ask people to believe in them. But we’ve always played it in
+                reverse. We believe in people.
+              </p>
+              <p style={{ margin: '0 0 1rem', fontWeight: 600 }}>
+                This heart you see? It’s our heart, the love and passion we make our food with. And that bite? That’s
+                you. It represents that food tastes better when it is shared with the ones you love.
+              </p>
+              <p style={{ margin: 0, fontWeight: 600 }}>
+                So Love Bites isn’t a brand. We are only people working for people.
               </p>
             </div>
           </Reveal>
@@ -112,63 +143,58 @@ export function About() {
         <Reveal>
           <h2 style={{ margin: '0 0 1rem', fontSize: '1.75rem', fontWeight: 800 }}>The timeline</h2>
         </Reveal>
-        <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: '1rem' }}>
+        <ol className="lb-spots-list" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
           {milestones.map((m, i) => (
             <Reveal key={m.year} delay={0.04 * i}>
-              <li
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'auto 1fr',
-                  gap: '1rem',
-                  padding: '1.5rem',
-                  borderRadius: 'var(--lb-radius-lg)',
-                  border: 'none',
-                  background: 'var(--lb-white)',
-                  boxShadow: 'var(--lb-shadow)',
-                }}
-              >
-                <span
-                  style={{
-                    fontWeight: 800,
-                    fontSize: '1.1rem',
-                    padding: '0.35rem 0.65rem',
-                    borderRadius: 12,
-                    border: 'none',
-                    background: 'var(--lb-cheese)',
-                    boxShadow: 'var(--lb-shadow-sm)',
-                    height: 'fit-content',
-                  }}
+              <li style={{ margin: 0 }}>
+                <motion.article
+                  className="lb-spot-card"
+                  whileHover={reduce ? undefined : { y: -4 }}
+                  transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+                  style={{ margin: 0 }}
                 >
-                  {m.year}
-                </span>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800 }}>{m.title}</h3>
-                  <p style={{ margin: '0.35rem 0 0' }}>{m.body}</p>
-                </div>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'auto 1fr',
+                      gap: '1rem',
+                      alignItems: 'start',
+                    }}
+                  >
+                    <span className="lb-spot-card__hours" style={{ margin: 0 }}>
+                      {m.year}
+                    </span>
+                    <div>
+                      <h3 className="lb-spot-card__title" style={{ fontSize: 'clamp(1.05rem, 3vw, 1.25rem)' }}>
+                        {m.title}
+                      </h3>
+                      <p className="lb-spot-card__address" style={{ marginBottom: 0 }}>
+                        {m.body}
+                      </p>
+                    </div>
+                  </div>
+                </motion.article>
               </li>
             </Reveal>
           ))}
         </ol>
       </section>
 
-      <section className="lb-container" style={{ paddingTop: 'clamp(3rem, 8vw, 5rem)' }}>
+      <section className="lb-container lb-spots-list" style={{ paddingTop: 'clamp(3rem, 8vw, 5rem)' }}>
         <Reveal>
-          <div
-            style={{
-              padding: '1.5rem',
-              borderRadius: 'var(--lb-radius-lg)',
-              border: 'none',
-              background: 'linear-gradient(135deg, var(--lb-cyan), var(--lb-white))',
-              boxShadow: 'var(--lb-shadow)',
-            }}
+          <motion.article
+            className="lb-spot-card"
+            whileHover={reduce ? undefined : { y: -4 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+            style={{ margin: 0 }}
           >
-            <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem', fontWeight: 800 }}>Values, but make it fun</h2>
-            <ul style={{ margin: 0, paddingLeft: '1.1rem', fontWeight: 600 }}>
-              <li>Real ingredients, loud flavor.</li>
-              <li>Staff and guests eat first — respect the bite.</li>
-              <li>Design matters: if it is not cute, we iterate.</li>
+            <h2 className="lb-spot-card__title">What stays the same</h2>
+            <ul className="lb-story-values">
+              <li>Honest food and consistent quality — Chiniot, Sargodha, or Faisalabad.</li>
+              <li>Guests and team treated like people, not tickets — hospitality before hype.</li>
+              <li>Every new door is a promise to keep improving, not coasting.</li>
             </ul>
-          </div>
+          </motion.article>
         </Reveal>
       </section>
     </main>
