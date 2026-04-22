@@ -17,7 +17,7 @@ const INPUTS = [
 
 /** CSV item name (lowercase) → file under `public/` (CSV has no image column) */
 const ITEM_IMAGES = {
-  'royal crust pizza': '/products/royal-crust-pizza.png',
+  'royal crust pizza': '/products/royal-crust-pizza-thumb.webp',
   'supreme bite': '/brand/pizza-supreme.png',
 }
 

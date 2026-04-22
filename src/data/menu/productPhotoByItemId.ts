@@ -1,51 +1,76 @@
 /**
- * Product photos in `public/products/` (see root `Product images/` source assets).
- * Keys are menu item `id` from location JSON — stable across Chiniot / Sargodha / Faisalabad.
+ * Product photos in `public/products/{stem}-thumb.webp` and `{stem}-full.webp`
+ * (run `npm run images:products` from PNG sources in `Product images/`).
+ * Values are file stems — stable across Chiniot / Sargodha / Faisalabad.
  */
-export const PRODUCT_PHOTO_BY_ITEM_ID: Readonly<Record<string, string>> = {
-  'premium-flavor-pizza--royal-crust-pizza': '/products/royal-crust-pizza.png',
-  'premium-flavor-pizza--behari-kabab-pizza': '/products/behari-kabab-pizza.png',
-  'premium-flavor-pizza--malai-boti-pizza': '/products/malai-boti.png',
-  'premium-flavor-pizza--peri-peri-pizza': '/products/peri-peri-pizza.png',
-  'premium-flavor-pizza--jamaican-pizza': '/products/jamaican-pizza.png',
+const PRODUCTS_BASE = '/products'
 
-  'premium-squared--queens-cut': '/products/queens-cut.png',
-  'premium-squared--o-top-behari': '/products/o-top-behari.png',
-  'premium-squared--smokey-firestone': '/products/smokey-firestone.png',
-  'premium-squared--eastside-mughlai': '/products/east-side-mughlai.png',
-  'premium-squared--squared-seasons': '/products/squared-seasons.png',
+export type ProductImagePaths = { thumb: string; full: string }
 
-  'long-shots-pizza--queens-cut': '/products/queens-cut-longshot.png',
-  'long-shots-pizza--o-top-behari': '/products/o-top-behari-longshot.png',
-  'long-shots-pizza--smokey-firestone': '/products/smokey-firestone-longshot.png',
-  'long-shots-pizza--eastside-mughlai': '/products/eastside-mughlai-longshot.png',
+export const PRODUCT_PHOTO_STEM_BY_ITEM_ID: Readonly<Record<string, string>> = {
+  'premium-flavor-pizza--royal-crust-pizza': 'royal-crust-pizza',
+  'premium-flavor-pizza--behari-kabab-pizza': 'behari-kabab-pizza',
+  'premium-flavor-pizza--malai-boti-pizza': 'malai-boti',
+  'premium-flavor-pizza--peri-peri-pizza': 'peri-peri-pizza',
+  'premium-flavor-pizza--jamaican-pizza': 'jamaican-pizza',
 
-  'regular-flavor-pizza--chicken-tikka': '/products/chicken-tikka-pizza.png',
-  'regular-flavor-pizza--chicken-fajita': '/products/fajita-pizza.png',
-  'regular-flavor-pizza--chicken-supreme': '/products/chicken-supreme-pizza.png',
-  'regular-flavor-pizza--chicken-bonfire': '/products/chicken-bonfire-pizza.png',
-  'regular-flavor-pizza--cheese-legend': '/products/cheese-legend.png',
+  'premium-squared--queens-cut': 'queens-cut',
+  'premium-squared--o-top-behari': 'o-top-behari',
+  'premium-squared--smokey-firestone': 'smokey-firestone',
+  'premium-squared--eastside-mughlai': 'east-side-mughlai',
+  'premium-squared--squared-seasons': 'squared-seasons',
 
-  'appetizers--oven-baked-wings': '/products/oven-baked-wings.png',
-  'appetizers--hot-wings': '/products/hot-wings.png',
+  'long-shots-pizza--queens-cut': 'queens-cut-longshot',
+  'long-shots-pizza--o-top-behari': 'o-top-behari-longshot',
+  'long-shots-pizza--smokey-firestone': 'smokey-firestone-longshot',
+  'long-shots-pizza--eastside-mughlai': 'eastside-mughlai-longshot',
 
-  'fries--plain-fries': '/products/fries.png',
-  'fries--loaded-fries': '/products/loaded-fries.png',
+  'regular-flavor-pizza--chicken-tikka': 'chicken-tikka-pizza',
+  'regular-flavor-pizza--chicken-fajita': 'fajita-pizza',
+  'regular-flavor-pizza--chicken-supreme': 'chicken-supreme-pizza',
+  'regular-flavor-pizza--chicken-bonfire': 'chicken-bonfire-pizza',
+  'regular-flavor-pizza--cheese-legend': 'cheese-legend',
 
-  'wraps-and-rolls--mexican-wrap': '/products/wraps-and-rolls.png',
-  'wraps-and-rolls--chipotle-wrap': '/products/wraps-and-rolls.png',
-  'wraps-and-rolls--n-y-creamy-wrap': '/products/wraps-and-rolls.png',
-  'wraps-and-rolls--zinger-wrap': '/products/wraps-and-rolls.png',
-  'wraps-and-rolls--mexican-twister': '/products/wraps-and-rolls.png',
-  'wraps-and-rolls--zinger-twister': '/products/wraps-and-rolls.png',
+  'appetizers--oven-baked-wings': 'oven-baked-wings',
+  'appetizers--hot-wings': 'hot-wings',
 
-  'grilled-chicken-burgers--special-jalapeno-big-bang': '/products/big-bang-burger.png',
+  'fries--plain-fries': 'fries',
+  'fries--loaded-fries': 'loaded-fries',
 
-  'fried-burgers--big-bite': '/products/big-bite.png',
+  'wraps-and-rolls--mexican-wrap': 'wraps-and-rolls',
+  'wraps-and-rolls--chipotle-wrap': 'wraps-and-rolls',
+  'wraps-and-rolls--n-y-creamy-wrap': 'wraps-and-rolls',
+  'wraps-and-rolls--zinger-wrap': 'wraps-and-rolls',
+  'wraps-and-rolls--mexican-twister': 'wraps-and-rolls',
+  'wraps-and-rolls--zinger-twister': 'wraps-and-rolls',
 
-  'pasta-platters--mexican-platter': '/products/mexican-platter.png',
+  'grilled-chicken-burgers--special-jalapeno-big-bang': 'big-bang-burger',
+
+  'fried-burgers--big-bite': 'big-bite',
+
+  'pasta-platters--mexican-platter': 'mexican-platter',
 }
 
-export function resolveMenuItemImagePath(item: { id: string; image?: string }): string | undefined {
-  return PRODUCT_PHOTO_BY_ITEM_ID[item.id] ?? item.image
+function pathsFromStem(stem: string): ProductImagePaths {
+  return {
+    thumb: `${PRODUCTS_BASE}/${stem}-thumb.webp`,
+    full: `${PRODUCTS_BASE}/${stem}-full.webp`,
+  }
+}
+
+/**
+ * If menu JSON has a legacy `image` from CSV, it may be `-thumb.webp` (paired with `-full`) or a single file (e.g. brand) used for both.
+ */
+function pathsFromOptionalImageField(image: string | undefined): ProductImagePaths | undefined {
+  if (image == null || image === '') return undefined
+  if (image.endsWith('-thumb.webp')) {
+    return { thumb: image, full: image.replace(/-thumb\.webp$/, '-full.webp') }
+  }
+  return { thumb: image, full: image }
+}
+
+export function resolveMenuItemImagePaths(item: { id: string; image?: string }): ProductImagePaths | undefined {
+  const stem = PRODUCT_PHOTO_STEM_BY_ITEM_ID[item.id]
+  if (stem) return pathsFromStem(stem)
+  return pathsFromOptionalImageField(item.image)
 }

@@ -18,7 +18,7 @@ import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
 import { menuProductBackdropColor } from '../utils/menuProductPalette'
-import { resolveMenuItemImagePath } from '../data/menu/productPhotoByItemId'
+import { resolveMenuItemImagePaths } from '../data/menu/productPhotoByItemId'
 import { IconChevronLeft, IconChevronRight } from '../components/icons/ChevronIcons'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
@@ -43,11 +43,11 @@ type MenuItemListItemProps = {
 }
 
 function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: MenuItemListItemProps) {
-  const imagePath = resolveMenuItemImagePath(item)
+  const imagePaths = resolveMenuItemImagePaths(item)
   const thumbBg = menuProductBackdropColor(item.id)
 
   const openLightboxForItem = () => {
-    if (!imagePath) return
+    if (!imagePaths) return
     const variantLines =
       item.variants && item.variants.length > 0
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
@@ -62,7 +62,7 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
         : '')
     setLightbox({
-      src: publicUrl(imagePath),
+      src: publicUrl(imagePaths.full),
       alt: `${item.name} — Love Bites`,
       title: item.name,
       price: lightboxPrice,
@@ -84,15 +84,15 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
     >
       <motion.div
         className="lb-menu-item-card"
-        role={imagePath ? 'button' : undefined}
-        tabIndex={imagePath ? 0 : undefined}
-        aria-label={imagePath ? `Open enlarged photo of ${item.name}` : undefined}
-        aria-haspopup={imagePath ? 'dialog' : undefined}
+        role={imagePaths ? 'button' : undefined}
+        tabIndex={imagePaths ? 0 : undefined}
+        aria-label={imagePaths ? `Open enlarged photo of ${item.name}` : undefined}
+        aria-haspopup={imagePaths ? 'dialog' : undefined}
         whileHover={reduce ? undefined : { y: -4, transition: { type: 'spring', stiffness: 420, damping: 26 } }}
         whileTap={reduce ? undefined : { y: 1, transition: { type: 'spring', stiffness: 500, damping: 28 } }}
-        onClick={imagePath ? openLightboxForItem : undefined}
+        onClick={imagePaths ? openLightboxForItem : undefined}
         onKeyDown={
-          imagePath
+          imagePaths
             ? (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
@@ -102,10 +102,10 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
             : undefined
         }
       >
-        {imagePath && (
+        {imagePaths && (
           <div className="lb-menu-item-card__thumb" style={{ backgroundColor: thumbBg }}>
             <ImageWithSkeleton
-              src={publicUrl(imagePath)}
+              src={publicUrl(imagePaths.thumb)}
               alt=""
               width={240}
               height={240}
