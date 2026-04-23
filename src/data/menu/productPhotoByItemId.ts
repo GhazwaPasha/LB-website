@@ -33,22 +33,38 @@ export const PRODUCT_PHOTO_STEM_BY_ITEM_ID: Readonly<Record<string, string>> = {
 
   'appetizers--oven-baked-wings': 'oven-baked-wings',
   'appetizers--hot-wings': 'hot-wings',
+  'appetizers--hot-shots': 'hot-shots',
+  'appetizers--bbq-spinroll': 'bbq-spinroll',
+  'appetizers--creamy-spinroll': 'creamy-spinroll',
+  'appetizers--nuggets': 'nuggets',
+  'appetizers--fire-glaze-chicken': 'fire-glaze-chicken',
 
   'fries--plain-fries': 'fries',
+  'fries--masala-fries': 'masala-fries',
+  'fries--mayo-garlic-fries': 'mayo-garlic-fries',
+  'fries--cheesy-fries': 'cheesy-fries',
   'fries--loaded-fries': 'loaded-fries',
 
   'wraps-and-rolls--mexican-wrap': 'wraps-and-rolls',
   'wraps-and-rolls--chipotle-wrap': 'wraps-and-rolls',
   'wraps-and-rolls--n-y-creamy-wrap': 'wraps-and-rolls',
   'wraps-and-rolls--zinger-wrap': 'wraps-and-rolls',
-  'wraps-and-rolls--mexican-twister': 'wraps-and-rolls',
-  'wraps-and-rolls--zinger-twister': 'wraps-and-rolls',
+  'wraps-and-rolls--mexican-twister': 'mexican-twister',
+  'wraps-and-rolls--zinger-twister': 'zinger-twister',
 
   'grilled-chicken-burgers--special-jalapeno-big-bang': 'big-bang-burger',
+  'grilled-chicken-burgers--cheesy-cream-pie': 'cheesy-cream-pie',
+  'grilled-chicken-burgers--deep-hot': 'deep-hot',
+  'grilled-chicken-burgers--dumpster-b-b-q': 'dumpster-b-b-q',
 
+  'fried-burgers--mega-bite': 'mega-bite',
   'fried-burgers--big-bite': 'big-bite',
+  'fried-burgers--b-b-q-crispy-burger': 'bbq-crispy-burger',
+  'fried-burgers--crispy-burger': 'crispy-burger',
 
+  'pasta-platters--oven-baked-pasta': 'oven-baked-pasta',
   'pasta-platters--mexican-platter': 'mexican-platter',
+  'pasta-platters--loaded-platter': 'loaded-platter',
 }
 
 function pathsFromStem(stem: string): ProductImagePaths {

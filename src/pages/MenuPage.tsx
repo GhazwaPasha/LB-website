@@ -651,13 +651,14 @@ export function MenuPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 34 }}
                   >
-                    <h2
-                      id={`menu-cat-heading-${locationId}-${cat.id}`}
-                      style={{ margin: '0 0 0.35rem', fontSize: '1.5rem', fontWeight: 800 }}
-                    >
-                      {cat.title}
-                    </h2>
-                    <p style={{ margin: '0 0 1.25rem', maxWidth: '40rem' }}>{cat.blurb}</p>
+                    <div className="lb-menu-category-banner">
+                      <h2
+                        id={`menu-cat-heading-${locationId}-${cat.id}`}
+                        className="lb-menu-category-banner__title"
+                      >
+                        {cat.title}
+                      </h2>
+                    </div>
 
                     <ul
                       className="menu-grid"

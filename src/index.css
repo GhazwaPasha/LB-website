@@ -1110,3 +1110,29 @@ button {
 .lb-menu-category-section {
   scroll-margin-top: calc(var(--lb-menu-cats-sticky-top) + 2.85rem);
 }
+
+.lb-menu-category-section + .lb-menu-category-section {
+  margin-top: 1.75rem;
+}
+
+.lb-menu-category-banner {
+  display: block;
+  text-align: center;
+  color: var(--lb-ink);
+  background: var(--lb-white);
+  border: 2px solid var(--lb-black);
+  border-radius: 0.55rem;
+  box-shadow: var(--lb-shadow-sm);
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lb-menu-category-banner__title {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
