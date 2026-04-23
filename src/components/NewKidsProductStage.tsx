@@ -86,6 +86,7 @@ export function NewKidsProductStage({ slides, reduceMotion }: Props) {
               fit="fill"
               src={current.src}
               alt=""
+              sizes="100vw"
               loading={index === 0 ? 'eager' : 'lazy'}
               fetchPriority={index === 0 ? 'high' : 'low'}
               decoding="async"

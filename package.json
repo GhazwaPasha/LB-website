@@ -9,7 +9,8 @@
     "postbuild": "node scripts/spa-github-pages.mjs",
     "preview": "vite preview",
     "menu:build": "node scripts/build-menu-from-csv.mjs",
-    "images:products": "node scripts/optimize-product-images.mjs"
+    "images:products": "node scripts/optimize-product-images.mjs",
+    "images:new-kids": "node scripts/optimize-new-kids-images.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
