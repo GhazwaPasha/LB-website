@@ -82,17 +82,19 @@ export function NewKidsProductStage({ slides, reduceMotion }: Props) {
             exit="exit"
             transition={slideTransition}
           >
-            <ImageWithSkeleton
-              fit="fill"
-              src={current.src}
-              alt=""
-              sizes="100vw"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchPriority={index === 0 ? 'high' : 'low'}
-              decoding="async"
-              draggable={false}
-              className="lb-new-kids-stage__bg-img"
-            />
+            <div className="lb-new-kids-stage__slide-inner">
+              <ImageWithSkeleton
+                fit="fill"
+                src={current.src}
+                alt=""
+                sizes="100vw"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'low'}
+                decoding="async"
+                draggable={false}
+                className="lb-new-kids-stage__product-img"
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

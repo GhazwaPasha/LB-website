@@ -171,6 +171,8 @@ a {
 button {
   font-family: inherit;
   cursor: pointer;
+  /* iOS Safari defaults `button` text to system link blue if `color` is unset */
+  color: inherit;
 }
 
 :focus-visible {
@@ -921,7 +923,7 @@ button {
   z-index: 1;
 }
 
-/* New kids — full-bleed: slide art fills the band; title sits over the image */
+/* New kids — solid mustard band; transparent product art is centered with contain */
 .lb-new-kids-stage {
   /*
     Fixed band height — not min-height — so text never stretches the strip.
@@ -935,6 +937,7 @@ button {
   height: var(--lb-new-kids-band-h);
   min-height: var(--lb-new-kids-band-h);
   color: var(--lb-ink);
+  background-color: var(--lb-mustard);
 }
 
 .lb-new-kids-stage__bg {
@@ -955,14 +958,21 @@ button {
   display: block;
 }
 
-.lb-new-kids-stage__bg-img {
+.lb-new-kids-stage__slide-inner {
+  position: absolute;
+  inset: clamp(2.25rem, 7vw, 3.25rem) clamp(0.75rem, 4vw, 2rem) clamp(2rem, 6vw, 2.75rem);
+  display: block;
+  min-height: 0;
+}
+
+.lb-new-kids-stage__product-img {
   display: block;
   width: 100%;
   height: 100%;
   min-height: 0;
   max-height: none;
-  object-fit: cover;
-  object-position: center 50%;
+  object-fit: contain;
+  object-position: center center;
 }
 
 .lb-new-kids-stage__intro-wrap {
@@ -989,11 +999,16 @@ button {
 
 .lb-new-kids-stage__title {
   margin: 0;
-  font-size: clamp(2rem, 4.75vw, 2.65rem);
+  /* Match home hero “Food never breaks your heart” */
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: 0.04em;
+  line-height: 1.08;
+  letter-spacing: clamp(0.015em, 0.28vw, 0.035em);
   text-transform: uppercase;
+  /* Hollow / outline — fill shows section background through the letters */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: clamp(1.5px, 0.12em, 2.75px) var(--lb-ink);
 }
 
 .lb-new-kids-stage__controls {

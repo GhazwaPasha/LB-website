@@ -6,6 +6,10 @@ const base = process.env.VITE_BASE_PATH?.trim() || '/'
 
 export default defineConfig({
   base,
+  server: {
+    // Listen on LAN so the terminal shows a network URL (phone / other device dev testing)
+    host: true,
+  },
   plugins: [
     react(),
     {
