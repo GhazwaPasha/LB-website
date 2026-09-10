@@ -49,6 +49,8 @@ function variantSizeCode(label) {
   if (lower === 'large') return 'L'
   if (lower === 'medium') return 'M'
   if (lower === 'small') return 'S'
+  if (lower === 'classic') return 'Cls'
+  if (lower === 'waffle') return 'Wfl'
   if (/^xl$/i.test(s)) return 'XL'
   const pcs = s.match(/^(\d+)\s*pcs?$/i)
   if (pcs) return pcs[1]

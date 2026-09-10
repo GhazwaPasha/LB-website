@@ -18,7 +18,7 @@ import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { publicUrl } from '../utils/publicUrl'
 import { menuProductBackdropColor } from '../utils/menuProductPalette'
-import { resolveMenuItemImagePaths } from '../data/menu/productPhotoByItemId'
+import { resolveMenuItemImagePaths, resolveMenuItemVariantImagePaths } from '../data/menu/productPhotoByItemId'
 import { IconChevronLeft, IconChevronRight } from '../components/icons/ChevronIcons'
 
 const MENU_LOCATION_STORAGE_KEY = 'lb-menu-location'
@@ -44,10 +44,16 @@ type MenuItemListItemProps = {
 
 function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: MenuItemListItemProps) {
   const imagePaths = resolveMenuItemImagePaths(item)
+  const [hoveredVariantIndex, setHoveredVariantIndex] = useState<number | null>(null)
+  const hoveredVariantCode =
+    hoveredVariantIndex != null ? item.variants?.[hoveredVariantIndex]?.size : undefined
+  const activeImagePaths = hoveredVariantCode
+    ? (resolveMenuItemVariantImagePaths(item, hoveredVariantCode) ?? imagePaths)
+    : imagePaths
   const thumbBg = menuProductBackdropColor(item.id)
 
   const openLightboxForItem = () => {
-    if (!imagePaths) return
+    if (!activeImagePaths) return
     const variantLines =
       item.variants && item.variants.length > 0
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' ')
@@ -62,7 +68,7 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
         ? item.variants.map((v) => `${v.size} - ${v.price}`).join(' · ')
         : '')
     setLightbox({
-      src: publicUrl(imagePaths.full),
+      src: publicUrl(activeImagePaths.full),
       alt: `${item.name} — Love Bites`,
       title: item.name,
       price: lightboxPrice,
@@ -84,15 +90,15 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
     >
       <motion.div
         className="lb-menu-item-card"
-        role={imagePaths ? 'button' : undefined}
-        tabIndex={imagePaths ? 0 : undefined}
-        aria-label={imagePaths ? `Open enlarged photo of ${item.name}` : undefined}
-        aria-haspopup={imagePaths ? 'dialog' : undefined}
+        role={activeImagePaths ? 'button' : undefined}
+        tabIndex={activeImagePaths ? 0 : undefined}
+        aria-label={activeImagePaths ? `Open enlarged photo of ${item.name}` : undefined}
+        aria-haspopup={activeImagePaths ? 'dialog' : undefined}
         whileHover={reduce ? undefined : { y: -4, transition: { type: 'spring', stiffness: 420, damping: 26 } }}
         whileTap={reduce ? undefined : { y: 1, transition: { type: 'spring', stiffness: 500, damping: 28 } }}
-        onClick={imagePaths ? openLightboxForItem : undefined}
+        onClick={activeImagePaths ? openLightboxForItem : undefined}
         onKeyDown={
-          imagePaths
+          activeImagePaths
             ? (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
@@ -102,10 +108,11 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
             : undefined
         }
       >
-        {imagePaths && (
+        {activeImagePaths && (
           <div className="lb-menu-item-card__thumb" style={{ backgroundColor: thumbBg }}>
             <ImageWithSkeleton
-              src={publicUrl(imagePaths.thumb)}
+              key={activeImagePaths.thumb}
+              src={publicUrl(activeImagePaths.thumb)}
               alt=""
               width={240}
               height={240}
@@ -160,7 +167,12 @@ function MenuItemListItem({ item, index, flatItemIndex, reduce, setLightbox }: M
           {item.variants && item.variants.length > 0 ? (
             <div className="lb-menu-item-card__variants-row">
               {item.variants.map((v, vi) => (
-                <div key={`${item.id}-v-${vi}`} className="lb-menu-item-card__variant-chip">
+                <div
+                  key={`${item.id}-v-${vi}`}
+                  className="lb-menu-item-card__variant-chip"
+                  onMouseEnter={() => setHoveredVariantIndex(vi)}
+                  onMouseLeave={() => setHoveredVariantIndex((cur) => (cur === vi ? null : cur))}
+                >
                   <span className="lb-menu-item-card__variant-label">
                     {v.size} - {v.price}
                   </span>

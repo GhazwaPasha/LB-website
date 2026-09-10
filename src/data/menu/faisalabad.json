@@ -13,17 +13,18 @@
         "variants": [
           {
             "size": "M",
-            "price": "1350"
+            "price": "1450"
           },
           {
             "size": "L",
-            "price": "1850"
+            "price": "1950"
           },
           {
             "size": "XL",
             "price": "2600"
           }
-        ]
+        ],
+        "image": "/products/royal-crust-pizza-thumb.webp"
       },
       {
         "id": "premium-flavor-pizza--behari-kabab-pizza",
@@ -53,15 +54,15 @@
         "variants": [
           {
             "size": "M",
-            "price": "1200"
+            "price": "1350"
           },
           {
             "size": "L",
-            "price": "1750"
+            "price": "1850"
           },
           {
             "size": "XL",
-            "price": "2500"
+            "price": "2600"
           }
         ]
       },
@@ -73,15 +74,15 @@
         "variants": [
           {
             "size": "M",
-            "price": "1200"
+            "price": "1350"
           },
           {
             "size": "L",
-            "price": "1750"
+            "price": "1850"
           },
           {
             "size": "XL",
-            "price": "2500"
+            "price": "2600"
           }
         ]
       },
@@ -93,11 +94,51 @@
         "variants": [
           {
             "size": "M",
-            "price": "1200"
+            "price": "1350"
           },
           {
             "size": "L",
-            "price": "1750"
+            "price": "1850"
+          },
+          {
+            "size": "XL",
+            "price": "2600"
+          }
+        ]
+      },
+      {
+        "id": "premium-flavor-pizza--cheese-legend",
+        "name": "Cheese Legend",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "M",
+            "price": "1350"
+          },
+          {
+            "size": "L",
+            "price": "1850"
+          },
+          {
+            "size": "XL",
+            "price": "2600"
+          }
+        ]
+      },
+      {
+        "id": "premium-flavor-pizza--half-n-half-any-2-flavours",
+        "name": "Half n Half (Any 2 Flavours)",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "M",
+            "price": "1300"
+          },
+          {
+            "size": "L",
+            "price": "1850"
           },
           {
             "size": "XL",
@@ -120,16 +161,12 @@
         "price": "",
         "variants": [
           {
-            "size": "S",
-            "price": "600"
-          },
-          {
             "size": "M",
-            "price": "1070"
+            "price": "1250"
           },
           {
             "size": "L",
-            "price": "1570"
+            "price": "1650"
           },
           {
             "size": "XL",
@@ -144,16 +181,12 @@
         "price": "",
         "variants": [
           {
-            "size": "S",
-            "price": "600"
-          },
-          {
             "size": "M",
-            "price": "1070"
+            "price": "1250"
           },
           {
             "size": "L",
-            "price": "1570"
+            "price": "1650"
           },
           {
             "size": "XL",
@@ -169,47 +202,15 @@
         "variants": [
           {
             "size": "M",
-            "price": "1150"
+            "price": "1290"
           },
           {
             "size": "L",
-            "price": "1650"
+            "price": "1690"
           },
           {
             "size": "XL",
             "price": "2500"
-          }
-        ]
-      },
-      {
-        "id": "regular-flavor-pizza--chicken-bonfire",
-        "name": "Chicken Bonfire",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "M",
-            "price": "1150"
-          },
-          {
-            "size": "L",
-            "price": "1650"
-          }
-        ]
-      },
-      {
-        "id": "regular-flavor-pizza--cheese-legend",
-        "name": "Cheese Legend",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "M",
-            "price": "1150"
-          },
-          {
-            "size": "L",
-            "price": "1650"
           }
         ]
       }
@@ -229,7 +230,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "1990"
+            "price": "2150"
           }
         ]
       },
@@ -241,7 +242,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "1990"
+            "price": "2150"
           }
         ]
       },
@@ -253,7 +254,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "1990"
+            "price": "2150"
           }
         ]
       },
@@ -265,7 +266,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "1990"
+            "price": "2150"
           }
         ]
       },
@@ -277,7 +278,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "1990"
+            "price": "2150"
           }
         ]
       }
@@ -297,7 +298,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "600"
+            "price": "690"
           }
         ]
       },
@@ -309,7 +310,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "600"
+            "price": "690"
           }
         ]
       },
@@ -321,7 +322,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "600"
+            "price": "690"
           }
         ]
       },
@@ -333,7 +334,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "600"
+            "price": "690"
           }
         ]
       }
@@ -358,6 +359,42 @@
         ]
       },
       {
+        "id": "appetizers--oven-baked-wings",
+        "name": "Oven Baked Wings",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "750"
+          }
+        ]
+      },
+      {
+        "id": "appetizers--chicken-strips",
+        "name": "Chicken Strips",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "750"
+          }
+        ]
+      },
+      {
+        "id": "appetizers--tender-pops",
+        "name": "Tender Pops",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "650"
+          }
+        ]
+      },
+      {
         "id": "appetizers--creamy-spinroll",
         "name": "Creamy Spinroll",
         "description": "",
@@ -365,7 +402,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "570"
+            "price": "590"
           }
         ]
       },
@@ -377,7 +414,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "570"
+            "price": "590"
           }
         ]
       },
@@ -409,31 +446,7 @@
           },
           {
             "size": "12",
-            "price": "700"
-          }
-        ]
-      },
-      {
-        "id": "appetizers--hot-shots",
-        "name": "Hot Shots",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "12",
-            "price": "600"
-          }
-        ]
-      },
-      {
-        "id": "appetizers--oven-baked-wings",
-        "name": "Oven Baked Wings",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "12",
-            "price": "700"
+            "price": "750"
           }
         ]
       }
@@ -452,8 +465,12 @@
         "price": "",
         "variants": [
           {
-            "size": "St",
-            "price": "290"
+            "size": "Cls",
+            "price": "350"
+          },
+          {
+            "size": "Wfl",
+            "price": "450"
           }
         ]
       },
@@ -464,38 +481,42 @@
         "price": "",
         "variants": [
           {
-            "size": "St",
-            "price": "300"
+            "size": "Cls",
+            "price": "350"
+          },
+          {
+            "size": "Wfl",
+            "price": "450"
           }
         ]
       },
       {
-        "id": "fries--mayo-garlic-fries",
-        "name": "Mayo Garlic Fries",
+        "id": "fries--herbs-garlic-mayo",
+        "name": "Herbs & Garlic Mayo",
         "description": "",
         "price": "",
         "variants": [
           {
-            "size": "St",
-            "price": "380"
-          }
-        ]
-      },
-      {
-        "id": "fries--cheesy-fries",
-        "name": "Cheesy Fries",
-        "description": "",
-        "price": "",
-        "variants": [
+            "size": "Cls",
+            "price": "420"
+          },
           {
-            "size": "St",
-            "price": "480"
+            "size": "Wfl",
+            "price": "520"
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "id": "wraps",
+    "shortTitle": "Wraps",
+    "title": "Wraps",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
       {
-        "id": "fries--loaded-fries",
-        "name": "Loaded Fries",
+        "id": "wraps--atomic-wrap",
+        "name": "Atomic Wrap",
         "description": "",
         "price": "",
         "variants": [
@@ -504,84 +525,40 @@
             "price": "750"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "wraps-and-rolls",
-    "shortTitle": "Wraps and Rolls",
-    "title": "Wraps and Rolls",
-    "blurb": "Faisalabad — sizes and prices in PKR.",
-    "items": [
+      },
       {
-        "id": "wraps-and-rolls--mexican-wrap",
-        "name": "Mexican Wrap",
+        "id": "wraps--sweet-glaze-wrap",
+        "name": "Sweet Glaze Wrap",
         "description": "",
         "price": "",
         "variants": [
           {
             "size": "St",
-            "price": "650"
+            "price": "750"
           }
         ]
       },
       {
-        "id": "wraps-and-rolls--chipotle-wrap",
+        "id": "wraps--chipotle-wrap",
         "name": "Chipotle Wrap",
         "description": "",
         "price": "",
         "variants": [
           {
             "size": "St",
-            "price": "650"
+            "price": "750"
           }
         ]
       },
       {
-        "id": "wraps-and-rolls--n-y-creamy-wrap",
-        "name": "N.Y Creamy Wrap",
+        "id": "wraps--herbs-garlic-wrap",
+        "name": "Herbs & Garlic Wrap",
         "description": "",
         "price": "",
         "variants": [
           {
             "size": "St",
-            "price": "650"
-          }
-        ]
-      },
-      {
-        "id": "wraps-and-rolls--zinger-wrap",
-        "name": "Zinger Wrap",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "650"
-          }
-        ]
-      },
-      {
-        "id": "wraps-and-rolls--mexican-twister",
-        "name": "Mexican Twister",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "430"
-          }
-        ]
-      },
-      {
-        "id": "wraps-and-rolls--zinger-twister",
-        "name": "Zinger Twister",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "470"
+            "price": "750"
           }
         ]
       }
@@ -601,37 +578,13 @@
         "variants": [
           {
             "size": "St",
-            "price": "490"
+            "price": "750"
           }
         ]
       },
       {
-        "id": "sandwiches--steak-sandwich",
-        "name": "Steak Sandwich",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "550"
-          }
-        ]
-      },
-      {
-        "id": "sandwiches--pizza-sandwich",
-        "name": "Pizza Sandwich",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "700"
-          }
-        ]
-      },
-      {
-        "id": "sandwiches--jalapeno-pizza-sandwich",
-        "name": "Jalapeno Pizza Sandwich",
+        "id": "sandwiches--citrus-blaze-sandwich",
+        "name": "Citrus Blaze Sandwich",
         "description": "",
         "price": "",
         "variants": [
@@ -640,54 +593,22 @@
             "price": "750"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "grilled-chicken-burgers",
-    "shortTitle": "Grilled Chicken Burgers",
-    "title": "Grilled Chicken Burgers",
-    "blurb": "Faisalabad — sizes and prices in PKR.",
-    "items": [
+      },
       {
-        "id": "grilled-chicken-burgers--special-jalapeno-big-bang",
-        "name": "Special Jalapeno Big Bang",
+        "id": "sandwiches--big-bang-sandwich",
+        "name": "Big Bang Sandwich",
         "description": "",
         "price": "",
         "variants": [
           {
             "size": "St",
-            "price": "850"
+            "price": "750"
           }
         ]
       },
       {
-        "id": "grilled-chicken-burgers--cheesy-cream-pie",
-        "name": "Cheesy Cream Pie",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "770"
-          }
-        ]
-      },
-      {
-        "id": "grilled-chicken-burgers--deep-hot",
-        "name": "Deep Hot",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "770"
-          }
-        ]
-      },
-      {
-        "id": "grilled-chicken-burgers--dumpster-b-b-q",
-        "name": "Dumpster B.B.Q",
+        "id": "sandwiches--atomic-sandwich",
+        "name": "Atomic Sandwich",
         "description": "",
         "price": "",
         "variants": [
@@ -706,6 +627,18 @@
     "blurb": "Faisalabad — sizes and prices in PKR.",
     "items": [
       {
+        "id": "fried-burgers--meg-cheese",
+        "name": "Meg Cheese",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "750"
+          }
+        ]
+      },
+      {
         "id": "fried-burgers--mega-bite",
         "name": "Mega Bite",
         "description": "",
@@ -713,7 +646,7 @@
         "variants": [
           {
             "size": "St",
-            "price": "650"
+            "price": "750"
           }
         ]
       },
@@ -725,61 +658,13 @@
         "variants": [
           {
             "size": "St",
-            "price": "550"
+            "price": "650"
           }
         ]
       },
       {
-        "id": "fried-burgers--b-b-q-crispy-burger",
-        "name": "B.B.Q Crispy Burger",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "380"
-          }
-        ]
-      },
-      {
-        "id": "fried-burgers--crispy-burger",
-        "name": "Crispy Burger",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "380"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "pasta-platters",
-    "shortTitle": "Pasta & Platters",
-    "title": "Pasta & Platters",
-    "blurb": "Faisalabad — sizes and prices in PKR.",
-    "items": [
-      {
-        "id": "pasta-platters--oven-baked-pasta",
-        "name": "Oven Baked Pasta",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "Reg",
-            "price": "700"
-          },
-          {
-            "size": "L",
-            "price": "800"
-          }
-        ]
-      },
-      {
-        "id": "pasta-platters--mexican-platter",
-        "name": "Mexican Platter",
+        "id": "fried-burgers--mighty-bite",
+        "name": "Mighty Bite",
         "description": "",
         "price": "",
         "variants": [
@@ -790,14 +675,290 @@
         ]
       },
       {
-        "id": "pasta-platters--loaded-platter",
-        "name": "Loaded Platter",
+        "id": "fried-burgers--junior-bite",
+        "name": "Junior Bite",
         "description": "",
         "price": "",
         "variants": [
           {
             "size": "St",
-            "price": "700"
+            "price": "450"
+          }
+        ]
+      },
+      {
+        "id": "fried-burgers--bbq-crispy-burger",
+        "name": "BBQ Crispy Burger",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "390"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "make-it-a-meal",
+    "shortTitle": "Make It A Meal",
+    "title": "Make It A Meal",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
+      {
+        "id": "make-it-a-meal--plain-meal-upgrade-fries-350ml-drink",
+        "name": "Plain Meal Upgrade (Fries + 350ml Drink)",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "420"
+          }
+        ]
+      },
+      {
+        "id": "make-it-a-meal--waffle-meal-upgrade-fries-350ml-drink",
+        "name": "Waffle Meal Upgrade (Fries + 350ml Drink)",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "520"
+          }
+        ]
+      },
+      {
+        "id": "make-it-a-meal--supa-cooler-upgrade",
+        "name": "Supa Cooler Upgrade",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "210"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pasta",
+    "shortTitle": "Pasta",
+    "title": "Pasta",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
+      {
+        "id": "pasta--oven-baked-pasta",
+        "name": "Oven Baked Pasta",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "Reg",
+            "price": "650"
+          },
+          {
+            "size": "L",
+            "price": "790"
+          }
+        ]
+      },
+      {
+        "id": "pasta--crunchy-pasta",
+        "name": "Crunchy Pasta",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "Reg",
+            "price": "650"
+          },
+          {
+            "size": "L",
+            "price": "790"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dips",
+    "shortTitle": "Dips",
+    "title": "Dips",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
+      {
+        "id": "dips--herbs-mayo-garlic",
+        "name": "Herbs & Mayo Garlic",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      },
+      {
+        "id": "dips--sweet-glaze",
+        "name": "Sweet Glaze",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      },
+      {
+        "id": "dips--wild-max",
+        "name": "Wild Max",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      },
+      {
+        "id": "dips--big-bang",
+        "name": "Big Bang",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      },
+      {
+        "id": "dips--chipotle",
+        "name": "Chipotle",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      },
+      {
+        "id": "dips--atomic",
+        "name": "Atomic",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "90"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "drinks",
+    "shortTitle": "Drinks",
+    "title": "Drinks",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
+      {
+        "id": "drinks--peach-ice-tea",
+        "name": "Peach Ice Tea",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "320"
+          }
+        ]
+      },
+      {
+        "id": "drinks--lychee-ice-tea",
+        "name": "Lychee Ice Tea",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "320"
+          }
+        ]
+      },
+      {
+        "id": "drinks--mint-ice-tea",
+        "name": "Mint Ice Tea",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "320"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "desserts",
+    "shortTitle": "Desserts",
+    "title": "Desserts",
+    "blurb": "Faisalabad — sizes and prices in PKR.",
+    "items": [
+      {
+        "id": "desserts--cookie-dough",
+        "name": "Cookie Dough",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "350"
+          }
+        ]
+      },
+      {
+        "id": "desserts--brownie",
+        "name": "Brownie",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "350"
+          }
+        ]
+      },
+      {
+        "id": "desserts--blondie",
+        "name": "Blondie",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "350"
+          }
+        ]
+      },
+      {
+        "id": "desserts--ice-cream-upgrade",
+        "name": "Ice Cream Upgrade",
+        "description": "",
+        "price": "",
+        "variants": [
+          {
+            "size": "St",
+            "price": "100"
           }
         ]
       }
@@ -810,8 +971,8 @@
     "blurb": "Faisalabad — sizes and prices in PKR.",
     "items": [
       {
-        "id": "extras--pizza-topping",
-        "name": "Pizza Topping",
+        "id": "extras--extra-topping-chicken-cheese",
+        "name": "Extra Topping (Chicken/Cheese)",
         "description": "",
         "price": "",
         "variants": [
@@ -842,30 +1003,6 @@
           {
             "size": "St",
             "price": "50"
-          }
-        ]
-      },
-      {
-        "id": "extras--extra-cheese-slice",
-        "name": "Extra Cheese Slice",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "80"
-          }
-        ]
-      },
-      {
-        "id": "extras--extra-dip-sauce",
-        "name": "Extra Dip Sauce",
-        "description": "",
-        "price": "",
-        "variants": [
-          {
-            "size": "St",
-            "price": "80"
           }
         ]
       }
