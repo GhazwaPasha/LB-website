@@ -70,7 +70,7 @@ export function Feedback() {
               padding: '0.75rem',
               borderRadius: 'var(--lb-radius-lg)',
               border: 'none',
-              background: 'var(--lb-white)',
+              background: 'var(--lb-black)',
               boxShadow: 'var(--lb-shadow)',
               overflow: 'hidden',
             }}
@@ -78,8 +78,9 @@ export function Feedback() {
             <iframe
               src={FORM_SRC}
               data-discord-forms=""
+              scrolling="no"
               title="Love Bites — Complaint & Feedback Form"
-              style={{ width: '100%', minHeight: '80vh', border: 0, display: 'block' }}
+              style={{ width: '100%', minHeight: '600px', border: 0, display: 'block', overflow: 'hidden' }}
             />
           </div>
         </Reveal>
