@@ -434,6 +434,20 @@ button {
   border-bottom: var(--lb-section-rule);
 }
 
+.lb-feedback-hero {
+  position: relative;
+  margin-top: -2px;
+  margin-right: 0;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  margin-left: 0;
+  padding-top: calc(clamp(0.5rem, 2vw, 1rem) + 2px);
+  padding-bottom: clamp(2rem, 6vw, 4rem);
+  overflow: hidden;
+  background: var(--lb-cyan);
+  color: var(--lb-ink);
+  border-bottom: var(--lb-section-rule);
+}
+
 .lb-spots-list {
   display: grid;
   gap: 1.25rem;

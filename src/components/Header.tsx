@@ -8,6 +8,7 @@ const nav = [
   { to: '/spots', label: 'Connect' },
   { to: '/about', label: 'Our Story' },
   { to: '/contact', label: 'Company' },
+  { to: '/feedback', label: 'Feedback' },
 ]
 
 export function Header() {
@@ -18,6 +19,7 @@ export function Header() {
   const isAboutPage = pathname === '/about'
   const isSpotsPage = pathname === '/spots'
   const isContactPage = pathname === '/contact'
+  const isFeedbackPage = pathname === '/feedback'
 
   return (
     <header
@@ -35,7 +37,9 @@ export function Header() {
               ? 'var(--lb-tomato)'
               : isContactPage
                 ? 'var(--lb-contact-hero-bg)'
-                : 'var(--lb-orange)',
+                : isFeedbackPage
+                  ? 'var(--lb-cyan)'
+                  : 'var(--lb-orange)',
         borderBottom: 'none',
         boxShadow: 'none',
       }}
