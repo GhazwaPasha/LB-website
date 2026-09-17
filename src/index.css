@@ -69,6 +69,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 img {
@@ -408,14 +409,16 @@ button {
 /* Match Home hero band: vertical rhythm + rule (text block uses same grid shell as Home) */
 .lb-spots-hero {
   position: relative;
-  margin: 0;
-  padding-top: clamp(0.5rem, 2vw, 1rem);
+  margin-top: -2px;
+  margin-right: 0;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  margin-left: 0;
+  padding-top: calc(clamp(0.5rem, 2vw, 1rem) + 2px);
   padding-bottom: clamp(2rem, 6vw, 4rem);
   overflow: hidden;
   background: var(--lb-tomato);
   color: var(--lb-ink);
   border-bottom: var(--lb-section-rule);
-  margin-bottom: clamp(1.25rem, 3vw, 2rem);
 }
 
 /* Contact — same rhythm as Spots hero: full-bleed band + ink rule under title */

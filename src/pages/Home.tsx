@@ -38,7 +38,9 @@ export function Home() {
         style={{
           position: 'relative',
           margin: 0,
-          paddingTop: 'clamp(0.5rem, 2vw, 1rem)',
+          /* Cover hairline gap (cream body) under sticky header — same idea as .lb-contact-hero */
+          marginTop: '-2px',
+          paddingTop: 'calc(clamp(0.5rem, 2vw, 1rem) + 2px)',
           paddingBottom: 'clamp(2rem, 6vw, 4rem)',
           overflow: 'hidden',
           background: 'var(--lb-orange)',

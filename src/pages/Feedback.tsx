@@ -67,7 +67,7 @@ export function Feedback() {
         <Reveal>
           <div
             style={{
-              padding: '0.75rem',
+              padding: 0,
               borderRadius: 'var(--lb-radius-lg)',
               border: 'none',
               background: 'var(--lb-black)',
@@ -80,7 +80,7 @@ export function Feedback() {
               data-discord-forms=""
               scrolling="no"
               title="Love Bites — Complaint & Feedback Form"
-              style={{ width: '100%', minHeight: '600px', border: 0, display: 'block', overflow: 'hidden' }}
+              style={{ width: '100%', minHeight: '700px', border: 0, display: 'block', overflow: 'hidden' }}
             />
           </div>
         </Reveal>
